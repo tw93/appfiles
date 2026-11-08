@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "appfiles.json",
+  "description": "The files and system entries an app creates outside its package. This schema checks the shape; validate.mjs also checks the path safety rules in appfiles.md.",
+  "type": "object",
+  "required": ["spec", "name"],
+  "anyOf": [
+    { "required": ["macos"] },
+    { "required": ["windows"] },
+    { "required": ["linux"] }
+  ],
+  "properties": {
+    "spec": { "const": 0 },
+    "name": { "type": "string", "minLength": 1 },
+    "macos": {
+      "allOf": [
+        { "$ref": "#/$defs/platform" },
+        {
+          "properties": {
+            "registrations": {
+              "items": {
+                "properties": {
+                  "type": { "enum": ["launchd", "login-item", "pkg", "system-extension", "kext"] }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "windows": {
+      "allOf": [
+        { "$ref": "#/$defs/platform" },
+        {
+          "properties": {
+            "registrations": {
+              "items": {
+                "properties": {
+                  "type": { "enum": ["registry", "run-value", "service", "scheduled-task", "firewall-rule", "path-entry"] }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "linux": {
+      "allOf": [
+        { "$ref": "#/$defs/platform" },
+        {
+          "properties": {
+            "registrations": {
+              "items": {
+                "properties": {
+                  "type": { "enum": ["systemd-unit", "package"] }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "platform": {
+      "type": "object",
+      "required": ["id", "paths"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "paths": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/path" }
+        },
+        "registrations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/registration" }
+        }
+      }
+    },
+    "path": {
+      "type": "object",
+      "required": ["path", "kind"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["user", "component", "data", "config", "state", "log", "cache"] },
+        "shared_with": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        }
+      }
+    },
+    "registration": {
+      "type": "object",
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "type": "string" },
+        "id": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
