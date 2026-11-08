@@ -74,6 +74,46 @@ test('refuses paths outside the allowed starts', () => {
   assert.ok(!isValid(linux('/home/alice/.example')));
 });
 
+test('allows one named command-line link in /usr/local/bin on macOS', () => {
+  assert.ok(isValid(macos('/usr/local/bin/zed', 'component')));
+  assert.ok(!isValid(macos('/usr/local/bin/zed', 'data')));
+  assert.ok(!isValid(macos('/usr/local/bin/', 'component')));
+  assert.ok(!isValid(macos('/usr/local/bin/sub/zed', 'component')));
+  assert.ok(!isValid(macos('/usr/local/bin/zed*', 'component')));
+  assert.ok(!isValid(macos('/usr/local/bin/..', 'component')));
+  assert.ok(!isValid(macos('/usr/local/lib/zed', 'component')));
+});
+
+test('a named file in a shared Windows folder is fine, the folder is not', () => {
+  assert.ok(isValid(windows('%LOCALAPPDATA%\\Microsoft\\WindowsApps\\example.cmd', 'component')));
+  assert.ok(isValid(windows('%APPDATA%\\Microsoft\\Windows\\SendTo\\Example.lnk', 'component')));
+  assert.ok(!isValid(windows('%LOCALAPPDATA%\\Microsoft\\WindowsApps', 'component')));
+  assert.ok(!isValid(windows('%APPDATA%\\Microsoft\\Windows\\SendTo', 'component')));
+  assert.ok(!isValid(windows('%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs', 'component')));
+});
+
+test('a Windows id may be a list, other platforms take one string', () => {
+  const document = windows('%APPDATA%\\Example');
+  document.windows.id = ['{ABC}_is1', '{DEF}_is1'];
+  assert.ok(isValid(document));
+  document.windows.id = [];
+  assert.ok(!isValid(document));
+  document.windows.id = ['ok', ''];
+  assert.ok(!isValid(document));
+  const mac = macos('~/.example');
+  mac.macos.id = ['com.example.a'];
+  assert.ok(!isValid(mac));
+});
+
+test('accepts a sparse package registration on Windows only', () => {
+  const document = windows('%APPDATA%\\Example');
+  document.windows.registrations = [{ type: 'package', id: 'Example_abc123' }];
+  assert.ok(isValid(document));
+  const mac = macos('~/.example');
+  mac.macos.registrations = [{ type: 'package', id: 'Example' }];
+  assert.ok(!isValid(mac));
+});
+
 test('refuses traversal', () => {
   assert.ok(!isValid(macos('~/Library/Caches/../../.ssh')));
   assert.ok(!isValid(macos('~/.example/./x')));

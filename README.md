@@ -59,7 +59,7 @@ It is a description. It has no scripts and no commands, and the tools that read 
 - [`appfiles.schema.json`](appfiles.schema.json): JSON Schema for editors and tools.
 - [`validate.mjs`](validate.mjs): checks a file against the rules, `node validate.mjs appfiles.json`, no dependencies.
 
-The format is at `spec: 0` and can still change. macOS and Windows are ready to use; Linux is a draft.
+The format is a draft at `spec: 0` and can still change. Nothing reads it yet.
 
 ## License
 

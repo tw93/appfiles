@@ -11,7 +11,8 @@ const KINDS = new Set(['user', 'component', 'data', 'config', 'state', 'log', 'c
 const PLATFORMS = {
   macos: {
     registrations: new Set(['launchd', 'login-item', 'pkg', 'system-extension', 'kext']),
-    prefixes: ['~/', '/Library/'],
+    prefixes: ['~/', '/Library/', '/usr/local/bin/'],
+    binRoot: '/usr/local/bin/',
     sharedRoots: new Set([
       '~/Library',
       '~/Library/Application Support',
@@ -61,7 +62,7 @@ const PLATFORMS = {
     ],
   },
   windows: {
-    registrations: new Set(['registry', 'run-value', 'service', 'scheduled-task', 'firewall-rule', 'path-entry']),
+    registrations: new Set(['registry', 'run-value', 'service', 'scheduled-task', 'firewall-rule', 'path-entry', 'package']),
     prefixes: ['%APPDATA%\\', '%LOCALAPPDATA%\\', '%PROGRAMDATA%\\', '%USERPROFILE%\\'],
     sharedRoots: new Set([
       '%USERPROFILE%\\AppData',
@@ -77,7 +78,12 @@ const PLATFORMS = {
       '%USERPROFILE%\\.gnupg',
       '%APPDATA%\\Microsoft',
       '%APPDATA%\\Microsoft\\Windows',
+      '%APPDATA%\\Microsoft\\Windows\\SendTo',
+      '%APPDATA%\\Microsoft\\Windows\\Start Menu',
+      '%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs',
+      '%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup',
       '%LOCALAPPDATA%\\Microsoft',
+      '%LOCALAPPDATA%\\Microsoft\\WindowsApps',
       '%LOCALAPPDATA%\\Packages',
       '%LOCALAPPDATA%\\Programs',
       '%LOCALAPPDATA%\\Temp',
@@ -176,6 +182,16 @@ function checkPath(platform, rules, entry, where, errors, warnings) {
     return;
   }
 
+  // A link in a shared bin folder is one named file that the app installed, and nothing else.
+  if (rules.binRoot && path.startsWith(rules.binRoot)) {
+    const name = path.slice(rules.binRoot.length);
+    if (!name || name.includes('/') || name.includes('*') || name === '.' || name === '..') {
+      errors.push(`${label} must name one file directly in ${rules.binRoot}`);
+    }
+    if (entry.kind !== 'component') errors.push(`${label} is in ${rules.binRoot}, so its kind must be component`);
+    return;
+  }
+
   const components = withoutTrailing.split(separator);
   if (components.includes('..') || components.includes('.')) errors.push(`${label} must not contain . or ..`);
   if (components.slice(1).some((part) => part === '')) errors.push(`${label} has an empty component`);
@@ -259,7 +275,8 @@ export function validate(document) {
       errors.push(`${platform} must be an object`);
       continue;
     }
-    if (!isText(section.id)) errors.push(`${platform}.id must be a string`);
+    const idValid = isText(section.id) || (platform === 'windows' && Array.isArray(section.id) && section.id.length > 0 && section.id.every(isText));
+    if (!idValid) errors.push(`${platform}.id must be ${platform === 'windows' ? 'a string or a non-empty list of strings' : 'a string'}`);
     if (!Array.isArray(section.paths)) {
       errors.push(`${platform}.paths must be a list`);
     } else {
