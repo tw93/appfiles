@@ -8,14 +8,15 @@ Work through the steps in order. Do not skip step 6: frameworks and libraries wr
 
 Find, for each platform the app ships on:
 
-- **macOS**: the bundle identifier (`CFBundleIdentifier`) of the released build. Read it from a built package when you have one. In source, packaging config and release scripts win over a development default. Electron: `appId` in the builder config, or `com.electron.<name>` when none is set.
+- **macOS**: the bundle identifier (`CFBundleIdentifier`) of the released build. Read it from a built package when you have one. In source, packaging config and release scripts win over a development default. Electron: `appId` in the builder config, or `com.electron.<name>` when none is set. A command-line app or daemon with no bundle uses its launchd label, or else its name.
 - **Windows**: the key name under `...\CurrentVersion\Uninstall`, using the table below.
 - **Linux**: the desktop file ID, or the Flatpak app ID. This section of the format is a draft.
 
 | Windows package | `id` |
 |---|---|
 | MSIX | Package Family Name |
-| Inno Setup | `AppId` plus `_is1`, with the script's `{{` written as `{` |
+| Inno Setup | `AppId` plus `_is1`, with the script's `{{` written as `{`. With no `AppId`, Inno uses `AppName` |
+| Tauri NSIS | The product name |
 | electron-builder NSIS | `nsis.guid`, or the UUID v5 of `appId` in namespace `50e065bc-3134-11e6-9bab-38c9862bdaf3` |
 | Other NSIS | The key name the script writes |
 | Squirrel | The package ID |
@@ -34,14 +35,14 @@ Search the code for the calls below, then resolve each to a literal path. Write 
 
 | Stack | Search for | Resolves to |
 |---|---|---|
-| Electron | `app.getPath`, `setPath`, `setName`, `userData`, `sessionData`, `setAppLogsPath`, `setAsDefaultProtocolClient` | `<name>` is `setName`, else `productName`, else `package.json`'s `name`. `userData` is `~/Library/Application Support/<name>`, `%APPDATA%\<name>`, `~/.config/<name>`. Logs are `~/Library/Logs/<name>` on macOS and `<userData>\logs` on Windows |
-| Tauri | `app_config_dir`, `app_data_dir`, `app_local_data_dir`, `app_cache_dir`, `app_log_dir`, `identifier` | Each is the base directory (Rust row) plus the bundle identifier. Logs are `~/Library/Logs/<identifier>` on macOS and `<local data>/<identifier>/logs` elsewhere |
+| Electron | `app.getPath`, `setPath`, `setName`, `userData`, `sessionData`, `setAppLogsPath`, `setAsDefaultProtocolClient` | `<name>` is `setName`, else `productName`, else `name`, from the `package.json` shipped in the app, which is `app/package.json` in a two-package layout. `userData` is `~/Library/Application Support/<name>`, `%APPDATA%\<name>`, `~/.config/<name>`. Logs are `~/Library/Logs/<name>` on macOS and `<userData>\logs` on Windows |
+| Tauri | `app_config_dir`, `app_data_dir`, `app_local_data_dir`, `app_cache_dir`, `app_log_dir`, `identifier` | Each is the base directory (Rust row) plus the bundle identifier. Logs are `~/Library/Logs/<identifier>` on macOS and `<local data>/<identifier>/logs` elsewhere. WebView2 keeps its data in `%LOCALAPPDATA%\<identifier>`. The NSIS installer writes the registry key `Software\<publisher>\<product>`, where `<publisher>` defaults to the identifier's second segment |
 | Rust | `dirs::`, `directories::`, `home_dir`, `XDG_` | See the base directory table below |
 | Swift, Objective-C | `UserDefaults`, `FileManager`, `applicationSupportDirectory`, `cachesDirectory`, `URLCache`, `WKWebView`, `NSHomeDirectory`, `containerURL`, `com.apple.security.app-sandbox` | See step 3. The entitlement decides which macOS list applies |
 | Go | `os.UserConfigDir`, `os.UserCacheDir`, `os.UserHomeDir` | Config: `~/Library/Application Support`, `%AppData%`, `$XDG_CONFIG_HOME`. Cache: `~/Library/Caches`, `%LocalAppData%`, `$XDG_CACHE_HOME` |
 | C#, .NET, WPF, WinUI | `Environment.SpecialFolder`, `Registry.CurrentUser`, `ApplicationData.Current`, `userDataFolder`, `Settings.settings` | `ApplicationData` is `%APPDATA%`, `LocalApplicationData` is `%LOCALAPPDATA%`, `CommonApplicationData` is `%PROGRAMDATA%` |
 | Qt | `QStandardPaths`, `QSettings`, `IniFormat`, `setOrganizationName`, `setOrganizationDomain`, `setApplicationName` | `<app>` below is `<org>/<app>` when an organization name is set. `AppDataLocation`: `~/Library/Application Support/<app>`, `%APPDATA%\<app>`, `~/.local/share/<app>`. `AppLocalDataLocation` on Windows: `%LOCALAPPDATA%\<app>`. `CacheLocation`: `~/Library/Caches/<app>`, `%LOCALAPPDATA%\<app>\cache`, `~/.cache/<app>`. `QSettings`: `~/Library/Preferences/com.<org>.<app>.plist`, `HKCU\Software\<org>\<app>`, `~/.config/<org>/<app>.conf`. With `IniFormat`: `~/.config/<org>/<app>.ini` on macOS and Linux, `%APPDATA%\<org>\<app>.ini` on Windows |
-| Flutter | `path_provider`, `getApplicationSupportDirectory`, `getApplicationCacheDirectory`, `shared_preferences` | Print the resolved paths on each platform in step 6. Do not guess them |
+| Flutter | `path_provider`, `getApplicationSupportDirectory`, `getApplicationCacheDirectory`, `shared_preferences` | Support: `~/Library/Application Support/<id>`, `%APPDATA%\<CompanyName>\<ProductName>` from `windows/runner/Runner.rc`, `$XDG_DATA_HOME/<id>`. Confirm them in step 6 |
 | C, C++ | `SHGetKnownFolderPath`, `%APPDATA%`, `getenv`, `RegCreateKey`, `NSSearchPath`, `XDG_` | Whatever the code builds |
 | Any | hard-coded `~/.name`, `.config/`, `.local/`, `AppData`, `ProgramData`, `homedir`, `HOME`, `USERPROFILE`, `XDG_`, `HKEY_`, `HKCU`, `HKLM` | Literal. `~/.config/x` built by hand is `%USERPROFILE%\.config\x` on Windows |
 
@@ -63,7 +64,7 @@ Check the docs and the config loader too. Terminals and developer tools often re
 
 Include what only some users turn on: optional features, plug-ins, integrations. Paths may not exist on a given machine, and that is fine.
 
-Also search for the app's command-line tools, shell integration and browser native messaging hosts. Each is a file outside the package.
+Also search for the app's command-line tools, shell integration and browser native messaging hosts. Each is a file outside the package. Native messaging manifests are one named `component` file per browser, with no `shared_with`.
 
 ## Step 3: Add what the platform writes for you
 
@@ -80,7 +81,7 @@ Add these three whatever the stack, Electron, Qt, Flutter and Rust included, eve
 Add these when the condition holds:
 
 - `~/Library/HTTPStorages/<id>`, kind `cache`. `URLSession` writes it, and Sparkle and Squirrel.Mac auto-update use `URLSession`. Add it unless you can see the app never does.
-- `~/Library/Cookies/<id>.binarycookies`, kind `data`, in the same case when the app signs in.
+- `~/Library/Cookies/<id>.binarycookies`, kind `data`, in the same case when the app has accounts.
 - `~/Library/WebKit/<id>`, kind `data`, when it uses `WKWebView`. Tauri on macOS does. Electron does not.
 
 **Sandboxed macOS apps**
@@ -88,7 +89,7 @@ Add these when the condition holds:
 A sandboxed app has `com.apple.security.app-sandbox` set to true in its entitlements.
 
 - `~/Library/Containers/<id>`, kind `data`. Everything the sandboxed app writes is inside it, so do not also list the paths above. An extension in the bundle has its own container under its own bundle ID.
-- `~/Library/Group Containers/<group id>`, kind `data`, for each App Group in the entitlements.
+- `~/Library/Group Containers/<group id>`, kind `data`, for each App Group in the entitlements. Replace `$(TeamIdentifierPrefix)` with the real team ID from the signing config. If you cannot find it, leave the entry out and say so in your handoff.
 - `~/Library/Application Scripts/<id>`, kind `state`, for the app and each extension.
 
 **Electron**
@@ -133,7 +134,7 @@ A single file you name in a shared folder is fine, such as `~/.local/bin/example
 - Anything inside the app's own package.
 - A parent folder shared by the vendor's other products. List `~/Library/Application Support/Example/Notes`, never `~/Library/Application Support/Example`.
 - What the OS keeps about the app: privacy permissions, recent document lists, LaunchServices records.
-- A location the user picked in the app at runtime. You can list the default one, as `user`.
+- A location the user picked in the app at runtime. You can list the default one, as `user`, unless it is a personal folder itself, such as `~/Movies`.
 - Temporary folders such as `$TMPDIR` and `%TEMP%`. The OS clears them.
 - A file the app only edits but does not own, such as `~/.zshrc`.
 - Paths beside the app's exe in portable mode. They are inside its own folder.
@@ -158,7 +159,7 @@ Add one `registrations` entry for each thing the app registers that is not a fil
 | Windows | `service` | Service name |
 | Windows | `scheduled-task` | Task path |
 | Windows | `firewall-rule` | Rule name. Search installers for `netsh advfirewall` and `FirewallRule`. An app that listens on a network port also gets a rule when the user accepts the Windows prompt, named after the exe's file description |
-| Windows | `path-entry` | The folder added to `PATH` |
+| Windows | `path-entry` | The folder added to `PATH`, using the default install location |
 | Windows | `package` | Package Family Name of a sparse or helper MSIX package |
 | Linux | `systemd-unit` | Unit name |
 | Linux | `package` | Package name |
