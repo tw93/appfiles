@@ -120,7 +120,7 @@ The gaps these turned up are in the [changelog](CHANGELOG.md). Hit something the
 
 I make [Mole](https://github.com/tw93/Mole), a cleaner for Mac and Windows, and to get its uninstaller right I tested more than 800 apps. Every one of them kept its files differently, so I wanted a format that lets an app say where its files are and what they are.
 
-Then I saw [auth.md](https://github.com/workos/auth.md), a file written for agents to follow, and thought the same shape fits here: a developer no longer has to learn a format, they tell their agent to read the steps. The name took a few rounds, since nobody who makes an app wants the word uninstall inside it.
+A developer should not have to learn a format for this, so the steps are written for coding agents, and they only tell their agent to read them. The name took a few rounds, since nobody who makes an app wants the word uninstall inside it.
 
 I don't expect this to spread quickly, so I started with my own apps.
 

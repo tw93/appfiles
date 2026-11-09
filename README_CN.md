@@ -120,7 +120,7 @@ npx github:tw93/appfiles appfiles.json
 
 我在做 [Mole](https://github.com/tw93/Mole)，一个 Mac 和 Windows 上的清理工具，为了把卸载做好测了 800 多款软件，发现每个软件放文件的方式都不一样，所以想有一个格式，让 App 自己说清楚文件在哪、都是什么。
 
-后来看到 [auth.md](https://github.com/workos/auth.md)，一份写给 Agent 照着做的文件，就想这里也可以用同样的形式，开发者不用先去学一个格式，让 Agent 读一遍步骤就好了。名字也改了几轮，毕竟做 App 的人都不希望自己的 App 里躺着一个带卸载字样的文件。
+开发者不用为这件事先去学一个格式，所以步骤是写给 Coding Agent 的，让 Agent 读一遍就好了。名字也改了几轮，毕竟做 App 的人都不希望自己的 App 里躺着一个带卸载字样的文件。
 
 我没指望它很快普及，所以先从自己的几个 App 开始带上。
 
