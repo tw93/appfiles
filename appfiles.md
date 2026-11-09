@@ -276,6 +276,7 @@ How to get it there:
 - **Tauri**: `bundle.resources` in `tauri.conf.json`, then confirm the file's location in the built package.
 - **.NET**: `<Content Include="appfiles.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />`. Velopack packs the publish folder, so the file lands beside the exe in `current\`.
 - **NSIS, Inno Setup, WiX**: install it beside the exe.
+- **macOS tool with no bundle**: install it as `share/appfiles/<id>.json` under the same prefix as `bin`. In a Homebrew formula, `(share/"appfiles").install "appfiles.json" => "<id>.json"`.
 
 Open the built package and confirm the file is at that exact path. On macOS, do this before signing, since the signature seals `Contents/Resources`.
 

@@ -4,6 +4,7 @@ Changes to the format while it is a draft at `spec: 0`. Nothing here raises `spe
 
 ## 2026-11-09
 
+- A macOS tool with no bundle now has a location, `<prefix>/share/appfiles/<id>.json`, the same shape as Linux. `<prefix>` is found after resolving the tool's links, because Homebrew's shared `share` folder holds only links. A reader takes the tool's identity from the formula or package that installed it, never from the file name alone.
 - A reader no longer selects a path by default only because the file lists it. It needs the first folder of the path to be the package's own name or to start with the section's `id`, or its own knowledge, so a file calling `~/Library/Application Support/Google/Chrome` a cache is shown but not ticked. A blind test found a reader built from section 9 ticking exactly that. Cases are in [`tests/selection.json`](tests/selection.json).
 - `/Users/Shared/` is an allowed start on macOS, the counterpart of `%PROGRAMDATA%`. Homebrew's `zap` lists hold 73 paths there.
 - `/Library/Developer`, `~/Library/Autosave Information`, `~/Library/Services` and `/etc/default` are shared roots, along with folders many apps share: `/Library/Input Methods`, `/Library/QuickLook`, browser native messaging folders, `~/Library/Logs/DiagnosticReports`, `%LOCALAPPDATA%\CrashDumps` and others. Of the 21,688 paths in Homebrew's `zap` lists, two name one, each a crash folder shared by every app using that library.
