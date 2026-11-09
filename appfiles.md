@@ -119,7 +119,7 @@ Take the first line that fits.
 | Question | kind |
 |---|---|
 | Did the user put these files there on purpose, in a folder they can see? Projects, exports, `~/Documents/<name>`, `~/Music/<name>`, a config file the user wrote by hand | `user` |
-| Is it code installed outside the package? Helper tools, audio plug-ins, drivers, launch agent plists, command-line shims, native messaging manifests | `component` |
+| Is it code, or files other programs load, installed outside the package? Helper tools, audio plug-ins, drivers, launch agent plists, command-line shims, native messaging manifests, agent skills | `component` |
 | Would the user lose something by deleting it, or have to do something to get it back? Databases, chat history, sign-ins, and things the user chose to download or install: models, extensions, plug-ins, virtual environments, offline content | `data` |
 | Is it settings the app wrote? | `config` |
 | Is it session or window state that is harmless to lose? | `state` |

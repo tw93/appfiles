@@ -94,7 +94,7 @@ A path has exactly one kind. An author takes the first line that fits, so when t
 | Kind | Meaning |
 |---|---|
 | `user` | Files the user put there on purpose, in a folder they can see |
-| `component` | Code installed outside the package, such as helpers, plug-ins, drivers and launch agents |
+| `component` | Code or files other programs load, installed outside the package, such as helpers, plug-ins, drivers, launch agents and agent skills |
 | `data` | Lost or hard to get back if deleted, including sign-ins and things the user chose to download |
 | `config` | Settings the app wrote |
 | `state` | Session or window state that is harmless to lose |
@@ -155,10 +155,10 @@ A file MUST NOT list:
 - What the OS keeps about the app: privacy permissions, recent document lists, LaunchServices records.
 - A location the user picked in the app at runtime. It MAY list the default one, as `user`, unless that is a personal folder itself, such as `~/Movies`.
 - Temporary folders such as `$TMPDIR` and `%TEMP%`. The OS clears them.
-- A file the app only edits but does not own, such as `~/.zshrc`.
+- A file the app only reads or edits but does not own, such as `~/.zshrc`.
 - Paths beside the app's exe in portable mode. They are inside its own folder.
 - Items in the Keychain, Credential Manager or another secret store. They are not files.
-- A license or trial record the app keeps on purpose so that it survives a reinstall. Tools should not reset it for the user.
+- A license or trial record the app keeps on purpose so that it survives a reinstall. Tools should not reset it for the user. A record inside a folder the file lists is covered by that folder and goes with it, so one that must survive lives outside every listed path.
 - Apps this app generates, when it is a tool that makes other apps. Each has its own ID and ships its own file.
 
 ## 9. Readers

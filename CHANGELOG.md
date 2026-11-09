@@ -8,7 +8,8 @@ Changes to the format while it is a draft at `spec: 0`. Nothing here raises `spe
 - The rules moved into [`SPEC.md`](SPEC.md). [`appfiles.md`](appfiles.md) keeps the steps for agents.
 - The validator runs without a clone, `npx github:tw93/appfiles appfiles.json`.
 - Added the Velopack `id`, the `HTTPStorages/<id>.binarycookies` file, builds that share an ID with different layouts, and hand-assembled bundles.
-- A file now leaves out secret-store items, trial records meant to survive a reinstall, and apps it generates.
+- A file now leaves out secret-store items, trial records meant to survive a reinstall, apps it generates, and files it only reads.
+- `component` now covers files other programs load, such as agent skills.
 
 ## 2026-11-08
 
