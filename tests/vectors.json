@@ -4843,5 +4843,275 @@
         ]
       }
     }
+  },
+  {
+    "name": "a folder in /Users/Shared",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "/Users/Shared/Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "/Users/Shared itself",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "/Users/Shared",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a shared plug-in folder as a whole",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "/Library/Input Methods",
+            "kind": "component"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "an input method in that folder",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "/Library/Input Methods/Example.app",
+            "kind": "component"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "all crash reports",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "~/Library/Logs/DiagnosticReports",
+            "kind": "log"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "this app's crash reports",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "~/Library/Logs/DiagnosticReports/Example*",
+            "kind": "log"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "an iCloud folder called a cache",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "~/Library/Mobile Documents/iCloud~com~example~notes",
+            "kind": "cache"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "an iCloud folder as user",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "~/Library/Mobile Documents/iCloud~com~example~notes",
+            "kind": "user"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a cloud storage folder called data",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "~/Library/CloudStorage/Example-Drive",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "all crash dumps",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "windows": {
+        "id": "Example",
+        "paths": [
+          {
+            "path": "%LOCALAPPDATA%\\CrashDumps",
+            "kind": "log"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "this app's crash dumps",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "windows": {
+        "id": "Example",
+        "paths": [
+          {
+            "path": "%LOCALAPPDATA%\\CrashDumps\\Example*",
+            "kind": "log"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a folder in OneDrive called data",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "windows": {
+        "id": "Example",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\OneDrive\\Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a tool's own folder may split off a skills folder as user",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "~/.claude/skills",
+            "kind": "user"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "every app's PLCrashReporter data",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "~/Library/Caches/com.plausiblelabs.crashreporter.data",
+            "kind": "log"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "this app's PLCrashReporter data",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "Example",
+      "macos": {
+        "id": "com.example.notes",
+        "paths": [
+          {
+            "path": "~/Library/Caches/com.plausiblelabs.crashreporter.data/com.example.notes",
+            "kind": "log"
+          }
+        ]
+      }
+    }
   }
 ]

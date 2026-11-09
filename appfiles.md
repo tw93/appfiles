@@ -41,11 +41,12 @@ Search the code for the calls below, then resolve each to a literal path. Write 
 | Electron | `app.getPath`, `setPath`, `setName`, `userData`, `sessionData`, `setAppLogsPath`, `setAsDefaultProtocolClient` | `<name>` is `setName`, else `productName`, else `name`, from the `package.json` shipped in the app, which is `app/package.json` in a two-package layout. `userData` is `~/Library/Application Support/<name>`, `%APPDATA%\<name>`, `~/.config/<name>`. Logs are `~/Library/Logs/<name>` on macOS and `<userData>\logs` on Windows |
 | Tauri | `app_config_dir`, `app_data_dir`, `app_local_data_dir`, `app_cache_dir`, `app_log_dir`, `identifier` | Each is the base directory (Rust row) plus the bundle identifier. Logs are `~/Library/Logs/<identifier>` on macOS and `<local data>/<identifier>/logs` elsewhere. WebView2 keeps its data in `%LOCALAPPDATA%\<identifier>`. The NSIS installer writes the registry key `Software\<publisher>\<product>`, where `<publisher>` defaults to the identifier's second segment |
 | Rust | `dirs::`, `directories::`, `home_dir`, `XDG_` | See the base directory table below |
-| Swift, Objective-C | `UserDefaults`, `FileManager`, `applicationSupportDirectory`, `cachesDirectory`, `URLCache`, `WKWebView`, `NSHomeDirectory`, `containerURL`, `com.apple.security.app-sandbox` | See step 3. The entitlement decides which macOS list applies |
+| Swift, Objective-C | `UserDefaults`, `FileManager`, `applicationSupportDirectory`, `cachesDirectory`, `URLCache`, `WKWebView`, `NSHomeDirectory`, `containerURL`, `forUbiquityContainerIdentifier`, `com.apple.security.app-sandbox` | See step 3. The entitlement decides which macOS list applies |
 | Go | `os.UserConfigDir`, `os.UserCacheDir`, `os.UserHomeDir` | Config: `~/Library/Application Support`, `%APPDATA%`, `$XDG_CONFIG_HOME`. Cache: `~/Library/Caches`, `%LOCALAPPDATA%`, `$XDG_CACHE_HOME` |
 | C#, .NET, WPF, WinUI | `Environment.SpecialFolder`, `Registry.CurrentUser`, `ApplicationData.Current`, `userDataFolder`, `Settings.settings` | `ApplicationData` is `%APPDATA%`, `LocalApplicationData` is `%LOCALAPPDATA%`, `CommonApplicationData` is `%PROGRAMDATA%`, `MyDocuments` is `%USERPROFILE%\Documents`, `UserProfile` is `%USERPROFILE%` |
 | Qt | `QStandardPaths`, `QSettings`, `IniFormat`, `setOrganizationName`, `setOrganizationDomain`, `setApplicationName` | `<app>` below is `<org>/<app>` when an organization name is set. `AppDataLocation`: `~/Library/Application Support/<app>`, `%APPDATA%\<app>`, `~/.local/share/<app>`. `AppLocalDataLocation` on Windows: `%LOCALAPPDATA%\<app>`. `CacheLocation`: `~/Library/Caches/<app>`, `%LOCALAPPDATA%\<app>\cache`, `~/.cache/<app>`. `QSettings`: `~/Library/Preferences/com.<org>.<app>.plist`, `HKCU\Software\<org>\<app>`, `~/.config/<org>/<app>.conf`. With `IniFormat`: `~/.config/<org>/<app>.ini` on macOS and Linux, `%APPDATA%\<org>\<app>.ini` on Windows |
 | Flutter | `path_provider`, `getApplicationSupportDirectory`, `getApplicationCacheDirectory`, `shared_preferences` | Support: `~/Library/Application Support/<id>`, `%APPDATA%\<CompanyName>\<ProductName>` from `windows/runner/Runner.rc`, `$XDG_DATA_HOME/<id>`. Confirm them in step 6 |
+| macOS helpers and installers | `SMJobBless`, `SMAppService`, `launchctl`, `pkgbuild`, `productbuild`, `postinstall`, `/Library/`, `/Users/Shared` | `SMJobBless` installs `/Library/LaunchDaemons/<label>.plist` and `/Library/PrivilegedHelperTools/<label>`, each `component`. Read every script the package runs, since they write what the app's own code never mentions |
 | C, C++ | `SHGetKnownFolderPath`, `%APPDATA%`, `getenv`, `RegCreateKey`, `NSSearchPath`, `XDG_` | Whatever the code builds |
 | Any | hard-coded `~/.name`, `.config/`, `.local/`, `AppData`, `ProgramData`, `homedir`, `HOME`, `USERPROFILE`, `XDG_`, `HKEY_`, `HKCU`, `HKLM` | Literal. `~/.config/x` built by hand is `%USERPROFILE%\.config\x` on Windows |
 
@@ -95,12 +96,24 @@ A sandboxed app has `com.apple.security.app-sandbox` set to true in its entitlem
 - `~/Library/Group Containers/<group id>`, kind `data`, for each App Group in the entitlements. An app that is not sandboxed needs this too when its source calls `containerURL(forSecurityApplicationGroupIdentifier:)`. Replace `$(TeamIdentifierPrefix)` with the real team ID from the signing config. If you cannot find it, leave the entry out and say so in your handoff.
 - `~/Library/Application Scripts/<id>`, kind `state`, for the app and each extension.
 
+**System components on macOS**
+
+List each named item the app or its installer puts in one of these, as `component`, in `/Library` or `~/Library`, whichever it uses. The folder itself is shared, so never list that: `Input Methods/<name>.app`, `QuickLook/<name>.qlgenerator`, `Spotlight/<name>.mdimporter`, `Audio/Plug-Ins/Components`, `HAL`, `VST` and `VST3`, `CoreMediaIO/Plug-Ins/DAL/<name>.plugin`, `Printers/<vendor>/<product>`, `PreferencePanes/<name>.prefPane`, `Screen Savers/<name>.saver`. A system extension is a registration, section 7, since macOS keeps its files.
+
+**Crash reports**
+
+These appear only after a crash, so step 6 will not show them. Add them from this list, as `log`, with `<name>` as the process writes it:
+
+- `~/Library/Caches/SentryCrash/<name>` with Sentry, `~/Library/Caches/KSCrash/<name>` or `~/Library/Caches/KSCrashReports/<name>` with KSCrash, and `~/Library/Caches/com.plausiblelabs.crashreporter.data/<id>` with PLCrashReporter.
+- `~/Library/Application Support/CrashReporter/<name>_*.plist` and `~/Library/Logs/DiagnosticReports/<name>*`, which macOS writes for any app.
+- `%LOCALAPPDATA%\CrashDumps\<exe>*`, which Windows writes for any app when dumps are turned on.
+
 **Electron**
 
 - `~/Library/Preferences/<id>.helper.plist`, kind `config`.
 - `~/Library/Caches/<id>.ShipIt` and `~/Library/Preferences/ByHost/<id>.ShipIt.*`, kind `cache`, with Squirrel.Mac auto-update.
 - `~/Library/Caches/<name>-updater` and `%LOCALAPPDATA%\<name>-updater`, kind `cache`, with `electron-updater`. The folder is `updaterCacheDirName` in the built `app-update.yml`: `package.json`'s `name` in lower case, without the `/`, so `@org/app` becomes `@orgapp-updater`.
-- `~/Library/Application Support/<name>` holds a Chromium profile with `Cache`, `Code Cache` and `GPUCache` inside. List the folder as `data` and add `<folder>/Cache`, `<folder>/Code Cache` and `<folder>/GPUCache` as `cache`.
+- `~/Library/Application Support/<name>` holds a Chromium profile with `Cache`, `Code Cache` and `GPUCache` inside. List the folder as `data`, add `<folder>/Cache`, `<folder>/Code Cache`, `<folder>/GPUCache`, `<folder>/DawnGraphiteCache` and `<folder>/DawnWebGPUCache` as `cache`, and `<folder>/Crashpad` as `log`.
 
 **Windows**
 
@@ -136,7 +149,7 @@ Leave out everything in section 8 of the spec, including the package itself, sha
 
 If another app reads or writes a path too, name that app's ID in `shared_with`, or the tool's plain name when it has no ID. Tools keep the path while any of those apps is installed.
 
-A folder in `~/Documents` and the other personal folders is `user` as a whole, even when it mixes in settings or logs. Tools keep it, so do not split it. On Windows, write the default location; tools resolve a redirected Documents folder themselves.
+A folder in `~/Documents` and the other personal folders is `user` as a whole, even when it mixes in settings or logs. Tools keep it, so do not split it. iCloud's `~/Library/Mobile Documents/iCloud~com~example~notes`, with the container ID's dots written as `~`, `~/Library/CloudStorage` and OneDrive under any of its names count too, since deleting there reaches the user's other devices. On Windows, write the default location; tools resolve a redirected Documents folder themselves.
 
 ## Step 5: List system entries
 
@@ -150,28 +163,54 @@ An app that registers itself as a login item, through `SMAppService.mainApp`, us
 
 Files that belong with an entry, such as a launchd plist in `~/Library/LaunchAgents`, still go in `paths`, as `component`.
 
+A line the app adds to a file it does not own, such as a `PATH` line in `~/.zshrc`, stays out: say so in your handoff. A backup it makes beside that file, such as `~/.zshrc.example-backup-*`, is its own, as `user`.
+
 ## Step 6: Run the app and compare
 
-Static reading misses things. On each platform you can reach, start from a clean profile, or a new account or VM, and do this.
+Static reading misses things. On each platform you can reach, start from a clean profile, or a new account or VM, and take the snapshot before installing, since installers write files too and often keep their old dates.
 
-macOS and Linux:
+macOS:
 
 ```sh
-touch /tmp/appfiles.marker
-# Open the app, sign in if it has accounts, use its main feature, quit it.
-find ~ -newer /tmp/appfiles.marker -not -path '*/Library/Mobile Documents/*' 2>/dev/null
+snapshot() { pkgutil --pkgs; launchctl list | awk '{print $3}'; launchctl print system | awk '/^\tservices = \{/{on=1;next} /^\t\}/{on=0} on && NF==3{print $3}'; systemextensionsctl list 2>/dev/null | grep -E '^[*[:space:]]*[A-Z0-9]{10}'; }
+snapshot | sort > /tmp/appfiles.before; touch /tmp/appfiles.marker
+# Install the app, open it, sign in if it has accounts, use its main feature, quit it.
+find ~ /Library /Users/Shared -cnewer /tmp/appfiles.marker -not -path '*/Library/Mobile Documents/*' 2>/dev/null
+snapshot | sort | diff /tmp/appfiles.before -
 ```
 
-Windows, in PowerShell:
+Linux:
+
+```sh
+snapshot() { systemctl list-unit-files --no-legend 2>/dev/null; systemctl --user list-unit-files --no-legend 2>/dev/null; dpkg-query -W -f '${Package}\n' 2>/dev/null; rpm -qa 2>/dev/null; }
+snapshot | sort > /tmp/appfiles.before; touch /tmp/appfiles.marker
+# Install the app, open it, sign in if it has accounts, use its main feature, quit it.
+find ~ /etc /var/lib -cnewer /tmp/appfiles.marker 2>/dev/null
+snapshot | sort | diff /tmp/appfiles.before -
+```
+
+Windows, in an administrator PowerShell:
 
 ```powershell
-$marker = Get-Date
-# Open the app, sign in if it has accounts, use its main feature, quit it.
+function Snapshot {
+  (Get-Service).Name
+  Get-ScheduledTask | ForEach-Object { $_.TaskPath + $_.TaskName }
+  (Get-NetFirewallRule).DisplayName
+  (Get-ChildItem 'HKCU:\Software', 'HKCU:\Software\Classes', 'HKLM:\SOFTWARE', 'HKLM:\SOFTWARE\Classes', 'HKLM:\SOFTWARE\WOW6432Node' -ErrorAction SilentlyContinue).Name
+  foreach ($key in 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run', 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run', 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run') {
+    (Get-Item $key -ErrorAction SilentlyContinue).Property
+  }
+  [Environment]::GetEnvironmentVariable('Path', 'User') -split ';'
+  [Environment]::GetEnvironmentVariable('Path', 'Machine') -split ';'
+}
+$before = Snapshot; $marker = Get-Date
+# Install the app, open it, sign in if it has accounts, use its main feature, quit it.
 Get-ChildItem $env:APPDATA, $env:LOCALAPPDATA, $env:PROGRAMDATA, $env:USERPROFILE -Recurse -Depth 3 -Force -ErrorAction SilentlyContinue |
-  Where-Object LastWriteTime -gt $marker | Select-Object FullName
+  Where-Object { $_.LastWriteTime -gt $marker -or $_.CreationTime -gt $marker } | ForEach-Object FullName
+Compare-Object $before (Snapshot) | Where-Object SideIndicator -eq '=>' | ForEach-Object InputObject
 ```
 
-Every new path that belongs to the app must be covered by an entry. Ignore what clearly belongs to other processes.
+Every new path that belongs to the app must be covered by an entry, and every new line of the snapshot that belongs to it by a registration. Ignore what clearly belongs to other processes.
 
 If you cannot run the app, say so in your handoff and list the platforms you did not check.
 

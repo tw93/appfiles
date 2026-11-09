@@ -127,7 +127,7 @@ A path MUST start with one of these:
 
 | Platform | Prefix |
 |---|---|
-| macOS | `~/`, `/Library/`, or `/usr/local/bin/` for one named link of kind `component` |
+| macOS | `~/`, `/Library/`, `/Users/Shared/`, or `/usr/local/bin/` for one named link of kind `component` |
 | Windows | `%APPDATA%\`, `%LOCALAPPDATA%\`, `%PROGRAMDATA%\`, `%USERPROFILE%\` |
 | Linux | `~/`, `$XDG_CONFIG_HOME/`, `$XDG_DATA_HOME/`, `$XDG_STATE_HOME/`, `$XDG_CACHE_HOME/`, `/etc/`, `/var/lib/` |
 
@@ -141,7 +141,7 @@ A path:
 - MUST NOT name a shared root itself, such as `~/Library/Caches` or `%APPDATA%`. Paths under a shared root are allowed.
 - MUST NOT name, contain or sit inside a protected location, such as `~/.ssh`, `~/Library/Keychains`, `/etc/passwd` or `%USERPROFILE%\NTUSER.DAT`.
 - MUST NOT use a wildcard that matches a reserved location or a folder holding one. `~/.ss*` reaches `~/.ssh`, `~/.con*` reaches `~/.config/gh`, `~/Library/Containers/com.*` and `*.apple.*` reach `com.apple.mail`, and on Windows `AppData.*` also matches `AppData`. A pattern closed by its own text, such as `*.com.example.notes`, can only be judged against the disk, which section 9 asks a reader to do.
-- MUST be kind `user` when it is inside a personal folder. Such a folder is `user` as a whole, even when it mixes in settings or logs.
+- MUST be kind `user` when it is inside a personal folder. Such a folder is `user` as a whole, even when it mixes in settings or logs. Folders that sync count too, such as iCloud's `~/Library/Mobile Documents`, `~/Library/CloudStorage` and `%USERPROFILE%\OneDrive`, since deleting there reaches the user's other devices.
 
 [`reserved.json`](reserved.json) lists the shared roots, protected locations and personal folders for each platform. The list is a floor: it stops the obvious mistakes and attacks, and it cannot name every folder that matters.
 
@@ -207,6 +207,7 @@ A file comes from the app it describes, so it is untrusted input. A reader:
 - SHOULD escape control characters when it shows text from the file.
 - MUST NOT let a kind alone lower the review a path would otherwise get. `cache` is the app's claim, and a file can call someone's data a cache.
 - MUST confirm that a registration belongs to the app before changing it, for example that a launchd job's program is inside the package.
+- MAY treat a browser native messaging manifest as the app's when the `path` field inside it points into the app's package.
 - MUST NOT delete a `user` entry by default, and MUST show `data` before deleting it.
 - MUST NOT select a path by default only because the file lists it. It MAY select a path that is tied to the app, or that its own knowledge confirms is the app's, and shows every other path unselected. A `user` entry and a kept path are never selected.
 - MUST keep a path while any app in `shared_with` is installed, and keep it when any other installed app claims it. A claim covers a path and everything under it, so a reader removing a folder leaves what another app claims inside it, and never removes what sits inside another app's claim. How a reader finds installed apps is its own choice, and when it cannot tell whether an app named in `shared_with` is installed, it keeps the path.

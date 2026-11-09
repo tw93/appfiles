@@ -10,7 +10,7 @@ const RESERVED = JSON.parse(readFileSync(new URL('./reserved.json', import.meta.
 const PLATFORMS = {
   macos: {
     registrations: new Set(['launchd', 'login-item', 'pkg', 'system-extension', 'kext']),
-    prefixes: ['~/', '/Library/', '/usr/local/bin/'],
+    prefixes: ['~/', '/Library/', '/Users/Shared/', '/usr/local/bin/'],
     binRoot: '/usr/local/bin/',
     expectedKinds: [
       ['~/library/caches/', 'cache', 'data', '~/Library/Caches/'],

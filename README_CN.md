@@ -139,7 +139,7 @@ npx github:tw93/appfiles /Applications/Example.app
 - **Windows**：测试和参考读取方在 Windows 11 上跑过，Mole 的 6 条路径在长期使用的安装上都能对上，没有在干净环境跑
 - **Linux**：Pake 的 Linux 版在 Debian 的 Xvfb 里用空的用户目录跑过，没有登录，它写的那一个文件被覆盖了，还没在真实桌面上验证，这部分格式也还是草案
 
-路径规则还用 Homebrew `zap` 列表里全部 21544 条不重复的路径跑过，靠它才没把第三方 App 放在苹果最近文稿目录里的文件误拒掉。之前规则接受的路径里，有 17 条现在是故意拒绝的，15 条在苹果自己的目录里，2 条写的是整个共享插件目录。这些验证发现的问题都记在[更新记录](CHANGELOG.md)里，碰到格式表达不了的情况，欢迎[提 issue](https://github.com/tw93/appfiles/issues)。
+路径规则还用 Homebrew `zap` 列表里全部 21544 条不重复的路径跑过，靠它才没把第三方 App 放在苹果最近文稿目录里的文件误拒掉。之前规则接受的路径里，有 19 条现在是故意拒绝的，15 条在苹果自己的目录里，4 条写的是整个共享目录。这些验证发现的问题都记在[更新记录](CHANGELOG.md)里，碰到格式表达不了的情况，欢迎[提 issue](https://github.com/tw93/appfiles/issues)。
 
 ## 背景
 

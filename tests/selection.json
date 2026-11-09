@@ -568,5 +568,86 @@
     "id": "...",
     "package_name": "---",
     "tied": false
+  },
+  {
+    "name": "the name under /Users/Shared",
+    "section": "9",
+    "platform": "macos",
+    "path": "/Users/Shared/Example Notes",
+    "id": "com.other.app",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "another app under /Users/Shared",
+    "section": "9",
+    "platform": "macos",
+    "path": "/Users/Shared/Adobe/Installer",
+    "id": "com.other.app",
+    "package_name": "Example Notes",
+    "tied": false
+  },
+  {
+    "name": "a crash folder named after the app",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/SentryCrash/Example Notes",
+    "id": "com.other.app",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "another app's crash folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/SentryCrash/Chrome",
+    "id": "com.other.app",
+    "package_name": "Example Notes",
+    "tied": false
+  },
+  {
+    "name": "a native messaging manifest named by the id",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Google/Chrome/NativeMessagingHosts/com.example.notes.json",
+    "id": "com.example.notes",
+    "package_name": "Evil",
+    "tied": true
+  },
+  {
+    "name": "another app's native messaging manifest",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Google/Chrome/NativeMessagingHosts/com.1password.1password.json",
+    "id": "com.example.notes",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "an input method named after the app",
+    "section": "9",
+    "platform": "macos",
+    "path": "/Library/Input Methods/Example Notes.app",
+    "id": "com.other.app",
+    "package_name": "Example Notes",
+    "tied": false
+  },
+  {
+    "name": "a skill named after the app",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/.agents/skills/hina",
+    "id": "com.other.app",
+    "package_name": "Hina",
+    "tied": true
+  },
+  {
+    "name": "a manifest under another browser",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Vivaldi/NativeMessagingHosts/com.example.notes.json",
+    "id": "com.example.notes",
+    "package_name": "Evil",
+    "tied": true
   }
 ]

@@ -139,7 +139,7 @@ Added it to yours? Open an issue or PR and it goes in this table. Nothing reads 
 - **Windows**: the tests and the reference reader ran on Windows 11. All six of Mole's paths were present on a long-used install, without a clean run
 - **Linux**: Pake's Linux build ran under Xvfb on Debian with an empty home folder, without signing in, and the one file it wrote was covered. It has not been checked on a real desktop, and that section of the format stays a draft
 
-The path rules were also run against all 21,544 unique paths in Homebrew's `zap` lists, which is how they stopped refusing third-party files inside Apple's recent-documents folder. Of the paths the previous rules accepted, 17 are now refused on purpose: 15 in Apple's own folders and 2 that name a whole shared plug-in folder. The gaps these turned up are in the [changelog](CHANGELOG.md). Hit something the format cannot express? Please [open an issue](https://github.com/tw93/appfiles/issues).
+The path rules were also run against all 21,544 unique paths in Homebrew's `zap` lists, which is how they stopped refusing third-party files inside Apple's recent-documents folder. Of the paths the previous rules accepted, 19 are now refused on purpose: 15 in Apple's own folders and 4 that name a whole shared folder. The gaps these turned up are in the [changelog](CHANGELOG.md). Hit something the format cannot express? Please [open an issue](https://github.com/tw93/appfiles/issues).
 
 ## Background
 
