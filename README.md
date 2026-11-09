@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>appfiles</h1>
+  <h1>appfiles.json</h1>
   <p><b>An open spec for the files an app leaves on your machine, and what each one is.</b></p>
   <p>English · <a href="README_CN.md">中文</a></p>
   <p>

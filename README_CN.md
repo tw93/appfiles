@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>appfiles</h1>
+  <h1>appfiles.json</h1>
   <p><b>一份开放规范，说清楚 App 在你电脑上留下了哪些文件，每个是什么</b></p>
   <p><a href="README.md">English</a> · 中文</p>
   <p>
@@ -23,7 +23,7 @@
   <img src="assets/appfiles.svg" alt="一份 appfiles.json，列出 App 的路径，每条标一种类型" width="1000" />
 </p>
 
-## 为什么做 appfiles
+## 为什么做 appfiles.json
 
 备份、迁移、清理和卸载工具，每一个都在猜哪些文件属于某个 App，丢了要不要紧。现在最接近答案的是 Homebrew 的 `zap` 列表，一个 App 一个 App 手写，只管 Mac，而且里面缓存和聊天记录长得一模一样。
 
