@@ -109,6 +109,8 @@ npx github:tw93/appfiles /Applications/Example.app
 | [妙言](https://github.com/tw93/MiaoYan) | macOS | [`appfiles.json`](https://github.com/tw93/MiaoYan/blob/main/Resources/appfiles.json) |
 | [Mole](https://mole.fit) | macOS、Windows | 在安装包里 |
 | [Pake](https://pake.run) | macOS、Windows、Linux | 在安装包里 |
+| [Hina](https://hina.day) | macOS | 在安装包里 |
+| [Yado](https://yado.house) | macOS | 在安装包里 |
 
 你的 App 也带上了的话，提个 issue 或 PR，我加进这张表。现在还没有工具读取这个格式，Mole 打算做第一个读取方。
 

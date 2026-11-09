@@ -109,6 +109,8 @@ These apps carry the file in their source, and it reaches users with each app's 
 | [MiaoYan](https://github.com/tw93/MiaoYan) | macOS | [`appfiles.json`](https://github.com/tw93/MiaoYan/blob/main/Resources/appfiles.json) |
 | [Mole](https://mole.fit) | macOS, Windows | In the app package |
 | [Pake](https://pake.run) | macOS, Windows, Linux | In the app package |
+| [Hina](https://hina.day) | macOS | In the app package |
+| [Yado](https://yado.house) | macOS | In the app package |
 
 Added it to yours? Open an issue or PR and it goes in this table. Nothing reads the format yet, and Mole is meant to be the first reader.
 
