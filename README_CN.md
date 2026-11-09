@@ -6,6 +6,8 @@
     <a href="SPEC.md">规范正文</a> ·
     <a href="appfiles.md">Agent 步骤</a> ·
     <a href="appfiles.schema.json">Schema</a> ·
+    <a href="reserved.json">保留名单</a> ·
+    <a href="tests/vectors.json">一致性测试</a> ·
     <a href="CHANGELOG.md">更新记录</a>
   </p>
   <a href="SPEC.md"><img src="https://img.shields.io/badge/spec-0%20draft-555?style=flat-square" alt="Spec 0，草案"></a>
@@ -39,11 +41,16 @@ Read https://raw.githubusercontent.com/tw93/appfiles/main/appfiles.md and add ap
 
 **你在做读取 App 的工具**，规则在[规范第 9 节](SPEC.md#9-readers)，第一条就是这个文件来自它描述的 App 本身，可以增加候选和标签，但永远不能扩大你的工具能动的范围。
 
-**你想校验一份文件**，不用克隆仓库也没有依赖，Node 18 以上就行：
+[`reserved.json`](reserved.json) 和 [`tests/vectors.json`](tests/vectors.json) 都是纯数据，不管用 Swift、C# 还是别的语言写读取方，用的都是同一份名单，跑的也是同样的用例。
+
+**你想校验一份文件或者看看一个 App**，不用克隆仓库也没有依赖，Node 18 以上就行：
 
 ```bash
 npx github:tw93/appfiles appfiles.json
+npx github:tw93/appfiles /Applications/Example.app
 ```
+
+给它文件就校验，给它 App 就是参考读取方，会拿文件和安装包的身份核对，拒掉不合规的条目，把剩下的列出来，并标明每条在这台机器上有没有。核对身份要在 macOS 上，因为它问的是系统的 `plutil`。给它放着这个文件的目录也一样，只是不核对身份。它只读，不做任何操作，所以不跟随链接也不展开通配符，真要删东西的工具得先做这两步。
 
 ## 格式长什么样
 
@@ -87,7 +94,7 @@ npx github:tw93/appfiles appfiles.json
 ## 为什么这样设计
 
 - **只描述不执行**：没有脚本也没有命令，读这个文件不会运行任何东西
-- **默认不信任**：一份坏文件可能写上别的 App 的目录，所以读取方要拿它和安装包的身份核对，自己的保护规则照旧
+- **默认不信任**：一份坏文件可能写上别的 App 的目录，或者把数据库标成缓存，所以读取方要拿它和安装包的身份核对，自己的保护规则照旧，[一份共用名单](reserved.json)再拒掉常见的密钥、邮件和系统文件
 - **位置固定**：Mac 上是 `Contents/Resources/appfiles.json`，Windows 上在 exe 旁边，工具只查一个路径，不需要索引
 - **一份文件管所有平台**：一个 App 发三个系统，也只维护一份
 - **Agent 来写，跑起来验证**：框架会写很多源码里看不到的文件，所以步骤最后一定要把 App 跑一遍对照
@@ -114,7 +121,7 @@ npx github:tw93/appfiles appfiles.json
 - **Windows**：和长期使用的安装对比过，没有在干净环境跑
 - **Linux**：还没实跑，这部分格式也还是草案
 
-这些验证发现的问题都记在[更新记录](CHANGELOG.md)里，碰到格式表达不了的情况，欢迎[提 issue](https://github.com/tw93/appfiles/issues)。
+路径规则还用 Homebrew `zap` 列表里全部 21544 条不重复的路径跑过，靠它才没把第三方 App 放在苹果最近文稿目录里的文件误拒掉。之前规则接受的路径里，有 17 条现在是故意拒绝的，15 条在苹果自己的目录里，2 条写的是整个共享插件目录。这些验证发现的问题都记在[更新记录](CHANGELOG.md)里，碰到格式表达不了的情况，欢迎[提 issue](https://github.com/tw93/appfiles/issues)。
 
 ## 背景
 

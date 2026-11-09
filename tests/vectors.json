@@ -1,0 +1,3916 @@
+[
+  {
+    "name": "a Mac data folder",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Mac cache folder",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Caches/com.example.t",
+            "kind": "cache"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a subfolder of a shared root",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Mobile Documents/iCloud~com~example~t",
+            "kind": "user"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a third-party Safari extension",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Safari/Extensions/Example.safariextz",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a dot folder in the home directory",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a user folder in Documents",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Documents/Example",
+            "kind": "user"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a folder that only starts like a personal one",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Documents2/Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a wildcard with a safe literal",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Preferences/ByHost/com.example.t.*",
+            "kind": "cache"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "one named link in /usr/local/bin",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "/usr/local/bin/example",
+            "kind": "component"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "shared_with",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.example",
+            "kind": "data",
+            "shared_with": [
+              "com.example.editor"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Windows roaming folder",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "T",
+        "paths": [
+          {
+            "path": "%APPDATA%\\Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Windows folder under a shared parent",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "T",
+        "paths": [
+          {
+            "path": "%LOCALAPPDATA%\\Programs\\Example",
+            "kind": "component"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Linux config folder",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "$XDG_CONFIG_HOME/example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Linux folder through its home path",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "~/.config/example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Linux system folder",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "/var/lib/example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Linux compares with case, so this is another folder",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "~/.SSH/example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "an unknown field",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.example",
+            "kind": "data"
+          }
+        ]
+      },
+      "future": 1
+    }
+  },
+  {
+    "name": "a $schema field",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "$schema": "https://example.com/s.json",
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Windows id list",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": [
+          "A",
+          "B"
+        ],
+        "paths": []
+      }
+    }
+  },
+  {
+    "name": "a launchd job",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "launchd",
+            "id": "com.example.t.helper"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a registry key of the app",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Example\\Notes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Windows service of the app",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "service",
+            "id": "ExampleService"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Linux unit of the app",
+    "section": "4-7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "systemd-unit",
+            "id": "example.service"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "spec is too high",
+    "section": "4",
+    "valid": false,
+    "document": {
+      "spec": 1,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "no name",
+    "section": "4",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "macos": {
+        "id": "a",
+        "paths": []
+      }
+    }
+  },
+  {
+    "name": "no platform",
+    "section": "4",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T"
+    }
+  },
+  {
+    "name": "an unknown kind",
+    "section": "5",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.example",
+            "kind": "stuff"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "outside the allowed starts",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "/opt/example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "traversal",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/../.ssh/id_rsa",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "another variable",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/$HOME/example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a wildcard in the middle",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/exa*/x",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a wildcard with two literals",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Caches/ab*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a shared root",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Caches",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a shared root with a trailing slash",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Caches/",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a shared root in lower case",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/library/caches",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a shared root in upper case",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/LIBRARY/Application Support",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a personal folder itself",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Documents",
+            "kind": "user"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "data in a personal folder",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Documents/Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "data in a personal folder in lower case",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/documents/Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a credentials folder",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.ssh/config",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a credentials folder in upper case",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.SSH/id_rsa",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the Keychains folder",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Library/Keychains/login.keychain-db",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a wildcard that reaches a credentials folder",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.ss*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a wildcard that reaches a shared root",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.confi*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a wildcard that reaches a personal folder",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/Docu*",
+            "kind": "user"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a shell startup file",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "~/.zshrc",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a link in /usr/local/bin that is not a component",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "com.example.t",
+        "paths": [
+          {
+            "path": "/usr/local/bin/example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the same path twice in another case",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "a",
+        "paths": [
+          {
+            "path": "~/.Example",
+            "kind": "data"
+          },
+          {
+            "path": "~/.example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Windows forward slashes",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "T",
+        "paths": [
+          {
+            "path": "%APPDATA%/Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the Windows roaming root",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "T",
+        "paths": [
+          {
+            "path": "%APPDATA%",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the roaming root by its long name",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "T",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\AppData\\Roaming",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Windows credentials",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "T",
+        "paths": [
+          {
+            "path": "%APPDATA%\\Microsoft\\Credentials",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Windows credentials by the long name",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "T",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\AppData\\Roaming\\Microsoft\\Credentials",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the Windows user hive",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "T",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\NTUSER.DAT",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the Linux password file",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "/etc/passwd",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the Linux ssh config",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "/etc/ssh/sshd_config",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Linux shared root by its home path",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "~/.config",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Linux keyring by its home path",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "~/.local/share/keyrings",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a package database",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "com.example.T",
+        "paths": [
+          {
+            "path": "/var/lib/dpkg",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "an Apple launchd job",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "launchd",
+            "id": "com.apple.WindowServer"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a type from another platform",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "service",
+            "id": "example"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a shared registry key",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Microsoft"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a shared registry key in another case",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\MICROSOFT\\WINDOWS NT\\CURRENTVERSION"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the user's environment key",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Environment"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a registry key with no hive",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "Software\\Example"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Windows system service",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "service",
+            "id": "WinDefend"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Windows system task",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "scheduled-task",
+            "id": "\\Microsoft\\Windows\\Defrag\\ScheduledDefrag"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Linux system unit",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "systemd-unit",
+            "id": "sshd.service"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a systemd unit by prefix",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "systemd-unit",
+            "id": "systemd-logind.service"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a parent of a protected location",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "a",
+        "paths": [
+          {
+            "path": "~/Library/Mail",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "the same path twice in another Unicode form",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "a",
+        "paths": [
+          {
+            "path": "~/.café",
+            "kind": "data"
+          },
+          {
+            "path": "~/.café",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Linux base package",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "package",
+            "id": "systemd"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/abc*??",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/abc*??",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/************************zzz",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/************************zzz",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.ſsh",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.ſsh",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.ßh",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.ßh",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.conﬁg/gh",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.conﬁg/gh",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Keychainſ",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Keychainſ",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Documentſ",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Documentſ",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.con*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.con*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.ss*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.ss*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Mai*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Mai*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/Foo\u001b[2J",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/Foo\u001b[2J",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/Foo\u0000",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/Foo\u0000",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Mail/V9",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Mail/V9",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Mail/V11",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Mail/V11",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Mail/MailData",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Mail/MailData",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Containers/com.apple.Notes",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Containers/com.apple.Notes",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Containers/com.*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Containers/com.*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Group Containers/group.com.apple.notes",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Group Containers/group.com.apple.notes",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Mobile Documents/com~apple~CloudDocs",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Mobile Documents/com~apple~CloudDocs",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/com.apple.TCC",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/com.apple.TCC",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/AddressBook",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/AddressBook",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/MobileSync",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/MobileSync",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Safari/History.db-wal",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Safari/History.db-wal",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.git-credentials",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.git-credentials",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.bash_history",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.bash_history",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.zlogin",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.zlogin",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.Trash",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.Trash",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Audio/Plug-Ins/Components",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Audio/Plug-Ins/Components",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Fonts",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Fonts",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Preferences/com.apple.dock.plist",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Preferences/com.apple.dock.plist",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/com.apple.sharedfilelist",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/com.apple.sharedfilelist",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Mail/Bundles/Example.mailbundle",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Mail/Bundles/Example.mailbundle",
+            "kind": "component"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.example.t.sfl*",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.example.t.sfl*",
+            "kind": "state"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Group Containers/*.com.example.t",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Group Containers/*.com.example.t",
+            "kind": "state"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Preferences/*.com.example.t.plist",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Preferences/*.com.example.t.plist",
+            "kind": "state"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Audio/Plug-Ins/Components/Example.component",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Audio/Plug-Ins/Components/Example.component",
+            "kind": "component"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\AppData\\Roam*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\AppData\\Roam*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\.ssh.",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\.ssh.",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\.ssh ",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\.ssh ",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\Micros~1\\Credentials",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\Micros~1\\Credentials",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\Example::$DATA",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\Example::$DATA",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\NUL",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\NUL",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\Com1.txt",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\Com1.txt",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\Application Data",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\Application Data",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\Application Data\\Microsoft\\Credentials",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\Application Data\\Microsoft\\Credentials",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\Local Settings\\Microsoft\\Windows\\UsrClass.dat",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\Local Settings\\Microsoft\\Windows\\UsrClass.dat",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\My Documents",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\My Documents",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\.netrc",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\.netrc",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\GitHub CLI",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\GitHub CLI",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %LOCALAPPDATA%\\Microsoft\\Windows\\UsrClass.dat",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%LOCALAPPDATA%\\Microsoft\\Windows\\UsrClass.dat",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %AppData%\\Example",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%AppData%\\Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%/Example",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%/Example",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: ~/.local/sha*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.local/sha*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: ~/.con*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.con*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/crontab",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/crontab",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/cron.d",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/cron.d",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/profile",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/profile",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/environment",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/environment",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/ld.so.conf",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/ld.so.conf",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/resolv.conf",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/resolv.conf",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/ssh/sshd_config",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/ssh/sshd_config",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/sudoers.d",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/sudoers.d",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: $XDG_DATA_HOME/Trash",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "$XDG_DATA_HOME/Trash",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: ~/.local/share/Trash",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.local/share/Trash",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: ~/.git-credentials",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.git-credentials",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/apt/sources.list.d/example.list",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/apt/sources.list.d/example.list",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/yum.repos.d/example.repo",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/yum.repos.d/example.repo",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/systemd/system/example.service",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/systemd/system/example.service",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/sudoers.d/example",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/sudoers.d/example",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/ssh/ssh_config.d/example.conf",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/ssh/ssh_config.d/example.conf",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/pam.d/example",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/pam.d/example",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/cron.d/example",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/cron.d/example",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\SYSTEM\\CurrentControlSet\\Services\\WinDefend",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\WinDefend"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\SYSTEM\\ControlSet001\\Services\\WinDefend",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SYSTEM\\ControlSet001\\Services\\WinDefend"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\Software\\\\Microsoft",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\Software\\\\Microsoft"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\SAM",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SAM"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\SECURITY\\Policy",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SECURITY\\Policy"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKCU\\Software\\Classes\\exefile",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\exefile"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry:  HKCU\\Software\\Example",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": " HKCU\\Software\\Example"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\SYSTEM\\CurrentControlSet\\Services\\ExampleService",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SYSTEM\\CurrentControlSet\\Services\\ExampleService"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows scheduled-task: Microsoft\\Windows\\Defrag\\ScheduledDefrag",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "scheduled-task",
+            "id": "Microsoft\\Windows\\Defrag\\ScheduledDefrag"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows path-entry: C:\\Windows\\System32",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "path-entry",
+            "id": "C:\\Windows\\System32"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows package: Microsoft.WindowsStore_8wekyb3d8bbwe",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "package",
+            "id": "Microsoft.WindowsStore_8wekyb3d8bbwe"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows service: windefend",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "service",
+            "id": "windefend"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos launchd: org.cups.cupsd",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "launchd",
+            "id": "org.cups.cupsd"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos launchd: gui/501/com.apple.Dock",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "launchd",
+            "id": "gui/501/com.apple.Dock"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos launchd:  com.apple.Dock",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "launchd",
+            "id": " com.apple.Dock"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux systemd-unit: sshd",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "systemd-unit",
+            "id": "sshd"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux systemd-unit: SSHD.service",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "systemd-unit",
+            "id": "SSHD.service"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: an open wildcard over the com.apple family",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Preferences/com.*",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: a wildcard for a team segment in an app's own name",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Preferences/com.*.example-notes.plist",
+            "kind": "config"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: a wildcard with text after an opening * and a closing *",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Group Containers/*.com.example.t*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.ẞh/id_rsa",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.ẞh/id_rsa",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Meẞages/chat.db",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Meẞages/chat.db",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/AddreẞBook",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/AddreẞBook",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Preferences/*.apple.*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Preferences/*.apple.*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Group Containers/*.apple.*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Group Containers/*.apple.*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: /Library/Application Support/*.apple.*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/Library/Application Support/*.apple.*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Containers/c*.mail",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Containers/c*.mail",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Containers/*.mail",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Containers/*.mail",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Safari/*story.db",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Safari/*story.db",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/.a‮b",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.a‮b",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/ssh/*_key",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/ssh/*_key",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux: /etc/ssh/ssh_host*key",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "/etc/ssh/ssh_host*key",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %LOCALAPPDATA%\\Application Data\\Microsoft\\Windows\\UsrClass.dat",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%LOCALAPPDATA%\\Application Data\\Microsoft\\Windows\\UsrClass.dat",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\Local Settings\\Application Data\\Microsoft\\Vault",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\Local Settings\\Application Data\\Microsoft\\Vault",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %PROGRAMDATA%\\Application Data\\Microsoft\\Crypto\\RSA",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%PROGRAMDATA%\\Application Data\\Microsoft\\Crypto\\RSA",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\SendTo",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\SendTo",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\Start Menu\\Programs\\Startup\\x.lnk",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\Start Menu\\Programs\\Startup\\x.lnk",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\.ssh.*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\.ssh.*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %USERPROFILE%\\AppData.*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%USERPROFILE%\\AppData.*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\Microsoft.*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\Microsoft.*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\COM¹",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\COM¹",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\CONOUT$",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\CONOUT$",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows: %APPDATA%\\foo~1bar",
+    "section": "6",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "%APPDATA%\\foo~1bar",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows path-entry: C:/Windows/System32",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "path-entry",
+            "id": "C:/Windows/System32"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows path-entry: %SystemDrive%\\Windows\\System32",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "path-entry",
+            "id": "%SystemDrive%\\Windows\\System32"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows path-entry: C:\\Program Files\\..\\Windows\\System32",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "path-entry",
+            "id": "C:\\Program Files\\..\\Windows\\System32"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows path-entry: C:\\Windows Kits\\bin",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "path-entry",
+            "id": "C:\\Windows Kits\\bin"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows scheduled-task: \\Microsoft\\Windows",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "scheduled-task",
+            "id": "\\Microsoft\\Windows"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows scheduled-task: Microsoft\\Windows",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "scheduled-task",
+            "id": "Microsoft\\Windows"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows scheduled-task: \\Microsoft",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "scheduled-task",
+            "id": "\\Microsoft"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows package: Microsoft.WindowsTerminal_8wekyb3d8bbwe",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "package",
+            "id": "Microsoft.WindowsTerminal_8wekyb3d8bbwe"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux package: sudo:amd64",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "package",
+            "id": "sudo:amd64"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux package: Sudo",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "package",
+            "id": "Sudo"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux systemd-unit: /lib/systemd/system/sshd.service",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "systemd-unit",
+            "id": "/lib/systemd/system/sshd.service"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux systemd-unit: sshd@.service",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "systemd-unit",
+            "id": "sshd@.service"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "linux systemd-unit: sshd.",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "linux": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "systemd-unit",
+            "id": "sshd."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos launchd: org.cups.cupsd.plist",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "launchd",
+            "id": "org.cups.cupsd.plist"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a control character in name",
+    "section": "4",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T\u0007",
+      "macos": {
+        "id": "x.y",
+        "paths": []
+      }
+    }
+  },
+  {
+    "name": "a control character in id",
+    "section": "4",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x\u0007",
+        "paths": []
+      }
+    }
+  },
+  {
+    "name": "a bidirectional character in shared_with",
+    "section": "4",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/.example",
+            "kind": "data",
+            "shared_with": [
+              "a‮b"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Application Support/com.*TCC*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Application Support/com.*TCC*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "macos: ~/Library/Mail/*V10*",
+    "section": "6",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "macos": {
+        "id": "x.y",
+        "paths": [
+          {
+            "path": "~/Library/Mail/*V10*",
+            "kind": "data"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\\\SAM",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\\\SAM"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\\\SOFTWARE\\Policies\\X",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\\\SOFTWARE\\Policies\\X"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKCU\\\\Software",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\\\Software"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry: HKLM\\SOFTWARE\\WOW6432Node\\WOW6432Node\\Policies",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\WOW6432Node\\WOW6432Node\\Policies"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows path-entry: C:\\\\Windows",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "path-entry",
+            "id": "C:\\\\Windows"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows path-entry: C:\\.\\Windows",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "path-entry",
+            "id": "C:\\.\\Windows"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows path-entry: C:\\Windows.",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "path-entry",
+            "id": "C:\\Windows."
+          }
+        ]
+      }
+    }
+  }
+]

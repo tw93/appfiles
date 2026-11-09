@@ -6,6 +6,8 @@
     <a href="SPEC.md">Specification</a> ·
     <a href="appfiles.md">Agent steps</a> ·
     <a href="appfiles.schema.json">Schema</a> ·
+    <a href="reserved.json">Reserved names</a> ·
+    <a href="tests/vectors.json">Conformance tests</a> ·
     <a href="CHANGELOG.md">Changelog</a>
   </p>
   <a href="SPEC.md"><img src="https://img.shields.io/badge/spec-0%20draft-555?style=flat-square" alt="Spec 0, draft"></a>
@@ -39,11 +41,16 @@ It reads your source, adds what your framework writes without asking, runs the a
 
 **You make a tool that reads apps.** [Section 9 of the spec](SPEC.md#9-readers) has the rules, starting with this one: the file comes from the app it describes, so it can add candidates and labels but never widen what your tool may touch.
 
-**You want to check a file.** No clone and no dependencies, Node 18 or later:
+[`reserved.json`](reserved.json) and [`tests/vectors.json`](tests/vectors.json) are plain data, so a reader in Swift, C# or anything else uses the same list and passes the same cases.
+
+**You want to check a file or see an app.** No clone and no dependencies, Node 18 or later:
 
 ```bash
 npx github:tw93/appfiles appfiles.json
+npx github:tw93/appfiles /Applications/Example.app
 ```
+
+Give it a file and it validates it. Give it an app and it is the reference reader: it checks the file against the package's identity, rejects bad entries and lists the rest with whether each exists on this machine. Checking that identity takes macOS, since it asks the system's `plutil`. Give it a folder holding the file and it does the same without the identity check. It only reads and acts on nothing, so it does not follow links or expand wildcards, which a tool that deletes things must do first.
 
 ## The Format
 
@@ -87,7 +94,7 @@ Seven kinds, ordered from what must never be lost to what rebuilds itself. When 
 ## Design
 
 - **It only describes**: no scripts and no commands, so reading a file can never run anything
-- **Untrusted by design**: a bad file could name another app's folder, so readers check its identity against the package and keep their own protections
+- **Untrusted by design**: a bad file could name another app's folder or call a database a cache, so readers check its identity against the package and keep their own protections, and [a shared list](reserved.json) refuses the obvious keys, mail and system files
 - **One fixed location**: `Contents/Resources/appfiles.json` on the Mac, beside the exe on Windows, so a tool checks one path and needs no index
 - **One file, every platform**: an app that ships on three systems keeps one source
 - **Written by agents, checked by running**: frameworks write files the source never mentions, so the steps end with running the app and comparing
@@ -114,7 +121,7 @@ Added it to yours? Open an issue or PR and it goes in this table. Nothing reads 
 - **Windows**: compared with a long-used install, without a clean run
 - **Linux**: not run yet, and that section of the format stays a draft
 
-The gaps these turned up are in the [changelog](CHANGELOG.md). Hit something the format cannot express? Please [open an issue](https://github.com/tw93/appfiles/issues).
+The path rules were also run against all 21,544 unique paths in Homebrew's `zap` lists, which is how they stopped refusing third-party files inside Apple's recent-documents folder. Of the paths the previous rules accepted, 17 are now refused on purpose: 15 in Apple's own folders and 2 that name a whole shared plug-in folder. The gaps these turned up are in the [changelog](CHANGELOG.md). Hit something the format cannot express? Please [open an issue](https://github.com/tw93/appfiles/issues).
 
 ## Background
 

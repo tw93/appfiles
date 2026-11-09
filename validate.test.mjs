@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -264,7 +264,7 @@ test('the kinds and registration types in the spec match the schema and the vali
 test('the command line checks the file when run through a symlink, as npx does', () => {
   const folder = mkdtempSync(join(tmpdir(), 'appfiles-'));
   const link = join(folder, 'appfiles');
-  symlinkSync(fileURLToPath(new URL('./validate.mjs', import.meta.url)), link);
+  symlinkSync(fileURLToPath(new URL('./cli.mjs', import.meta.url)), link);
   const run = (document) => {
     const file = join(folder, 'appfiles.json');
     writeFileSync(file, JSON.stringify(document));
@@ -286,4 +286,251 @@ test('relative links in the docs point at files in the repository', () => {
       assert.ok(existsSync(new URL(`./${target}`, import.meta.url)), `${name} links to ${target}`);
     }
   }
+});
+
+test('every conformance vector reaches its verdict', () => {
+  const vectors = JSON.parse(repoFile('tests/vectors.json'));
+  assert.ok(vectors.length > 50);
+  for (const { name, valid, document } of vectors) {
+    const { errors } = validate(document);
+    assert.equal(errors.length === 0, valid, `${name}: ${errors.join('; ')}`);
+  }
+});
+
+test('every reserved path is refused whichever kind it claims, and in another case on macOS and Windows', () => {
+  const reserved = JSON.parse(repoFile('reserved.json'));
+  const builders = { macos, windows, linux };
+  for (const [platform, lists] of Object.entries(reserved)) {
+    for (const path of [...lists.shared_roots, ...lists.protected]) {
+      for (const kind of ['user', 'data', 'cache']) {
+        assert.ok(!isValid(builders[platform](path, kind)), `${platform} ${path} ${kind}`);
+      }
+      if (platform !== 'linux') {
+        assert.ok(!isValid(builders[platform](path.toUpperCase())), `${platform} ${path} upper`);
+      }
+    }
+  }
+});
+
+test('the spec does not call the validator the authority', () => {
+  const spec = repoFile('SPEC.md');
+  assert.match(spec, /this text is right and the tool has a bug/);
+  assert.doesNotMatch(spec, /passes the validator/);
+});
+
+const hasPlutil = existsSync('/usr/bin/plutil');
+const makeApp = (folder, { id = 'com.example.test', file } = {}) => {
+  const app = join(folder, 'Example.app');
+  mkdirSync(join(app, 'Contents', 'Resources'), { recursive: true });
+  writeFileSync(join(app, 'Contents', 'Info.plist'), `<?xml version="1.0"?><plist version="1.0"><dict><key>CFBundleIdentifier</key><string>${id}</string></dict></plist>`);
+  if (file) writeFileSync(join(app, 'Contents', 'Resources', 'appfiles.json'), JSON.stringify(file));
+  return app;
+};
+const cli = (target) => spawnSync(process.execPath, [fileURLToPath(new URL('./cli.mjs', import.meta.url)), target], { encoding: 'utf8' });
+
+test('the reference reader lists a matching package and changes nothing', { skip: !hasPlutil }, () => {
+  const app = makeApp(mkdtempSync(join(tmpdir(), 'appfiles-')), { file: macos('~/Library/Application Support/Example') });
+  const before = readFileSync(join(app, 'Contents', 'Resources', 'appfiles.json'), 'utf8');
+  const run = cli(app);
+  assert.equal(run.status, 0, run.stdout);
+  assert.match(run.stdout, /identity matches/);
+  assert.match(run.stdout, /data\s+~\/Library\/Application Support\/Example/);
+  assert.equal(readFileSync(join(app, 'Contents', 'Resources', 'appfiles.json'), 'utf8'), before);
+});
+
+test('the reference reader ignores a file whose id is not the package', { skip: !hasPlutil }, () => {
+  const app = makeApp(mkdtempSync(join(tmpdir(), 'appfiles-')), { id: 'com.other.app', file: macos('~/.example') });
+  const run = cli(app);
+  assert.equal(run.status, 1);
+  assert.match(run.stdout, /does not match/);
+  assert.doesNotMatch(run.stdout, /~\/\.example/);
+});
+
+test('the reference reader rejects bad entries and keeps the valid ones', { skip: !hasPlutil }, () => {
+  const file = { spec: 0, name: 'T', macos: { id: 'com.example.test', paths: [{ path: '~/.example', kind: 'data' }, { path: '~/.ssh/id_rsa', kind: 'cache' }] } };
+  const run = cli(makeApp(mkdtempSync(join(tmpdir(), 'appfiles-')), { file }));
+  assert.equal(run.status, 1);
+  assert.match(run.stdout, /data\s+~\/\.example/);
+  assert.match(run.stdout, /rejected\s+~\/\.ssh\/id_rsa/);
+});
+
+test('the reference reader ignores a file with a newer spec, and says when there is no file', { skip: !hasPlutil }, () => {
+  const newer = cli(makeApp(mkdtempSync(join(tmpdir(), 'appfiles-')), { file: { ...macos('~/.example'), spec: 1 } }));
+  assert.equal(newer.status, 1);
+  assert.match(newer.stdout, /newer than this tool/);
+  assert.doesNotMatch(newer.stdout, /~\/\.example/);
+
+  const none = cli(makeApp(mkdtempSync(join(tmpdir(), 'appfiles-'))));
+  assert.equal(none.status, 1);
+  assert.match(none.stdout, /no appfiles\.json/);
+});
+
+const tempDir = () => mkdtempSync(join(tmpdir(), 'appfiles-'));
+const resourceFile = (app) => join(app, 'Contents', 'Resources', 'appfiles.json');
+
+test('a crafted wildcard neither crashes nor stalls the validator', () => {
+  assert.ok(!isValid(macos('~/abc*??')));
+  const started = Date.now();
+  validate(macos(`~/Library/Application Support/${'a*'.repeat(40)}zzz`));
+  assert.ok(Date.now() - started < 2000);
+});
+
+test('the reference reader survives fields of the wrong type', { skip: !hasPlutil }, () => {
+  for (const file of [
+    { spec: 0, name: { toString: 1 }, macos: { id: 'com.example.test', paths: [{ path: { toString: 1 }, kind: 'data' }] } },
+    { spec: 0, name: 'T', macos: { id: 'com.example.test', paths: [1, null], registrations: [1] } },
+  ]) {
+    const run = cli(makeApp(tempDir(), { file }));
+    assert.equal(run.status, 1, run.stderr);
+    assert.doesNotMatch(run.stderr, /TypeError/);
+  }
+  const noSection = cli(makeApp(tempDir(), { file: { spec: 0, windows: true } }));
+  assert.equal(noSection.status, 1);
+  assert.doesNotMatch(noSection.stdout, /undefined/);
+});
+
+test('the reference reader judges a bundle by what it is, not by its name', { skip: !hasPlutil }, () => {
+  const folder = tempDir();
+  const app = makeApp(folder, { id: 'com.other.app', file: macos('~/.example') });
+  const renamed = join(folder, 'Example.APP');
+  symlinkSync(app, join(folder, 'Link.app'));
+  for (const target of [join(folder, 'Link.app'), existsSync(renamed) ? renamed : app]) {
+    assert.match(cli(target).stdout, /does not match/);
+  }
+  const noSuffix = makeApp(tempDir(), { id: 'com.other.app', file: macos('~/.example') });
+  const plain = `${noSuffix}.folder`;
+  symlinkSync(noSuffix, plain);
+  assert.match(cli(plain).stdout, /does not match/);
+});
+
+test('the reference reader ignores a commented-out identifier', { skip: !hasPlutil }, () => {
+  const app = makeApp(tempDir(), { file: macos('~/.example') });
+  writeFileSync(join(app, 'Contents', 'Info.plist'), '<?xml version="1.0"?><plist version="1.0"><dict><!-- <key>CFBundleIdentifier</key><string>com.example.test</string> --><key>CFBundleIdentifier</key><string>com.other.app</string></dict></plist>');
+  assert.match(cli(app).stdout, /does not match/);
+});
+
+test('the reference reader refuses a file that is not a regular file', { skip: !hasPlutil }, () => {
+  const app = makeApp(tempDir());
+  const outside = join(tempDir(), 'appfiles.json');
+  writeFileSync(outside, JSON.stringify(macos('~/.example')));
+  symlinkSync(outside, resourceFile(app));
+  const linked = cli(app);
+  assert.equal(linked.status, 1);
+  assert.match(linked.stdout, /not a regular file/);
+
+  rmSync(resourceFile(app));
+  mkdirSync(resourceFile(app));
+  assert.match(cli(app).stdout, /not a regular file/);
+
+  const plist = makeApp(tempDir(), { file: macos('~/.example') });
+  rmSync(join(plist, 'Contents', 'Info.plist'));
+  mkdirSync(join(plist, 'Contents', 'Info.plist'));
+  const run = cli(plist);
+  assert.equal(run.status, 1);
+  assert.doesNotMatch(run.stderr, /Error/);
+});
+
+test('the reference reader sees duplicates, and tells a bad spec from a newer one', { skip: !hasPlutil }, () => {
+  const file = { spec: 0, name: 'T', macos: { id: 'com.example.test', paths: [{ path: '~/.example', kind: 'data' }, { path: '~/.EXAMPLE', kind: 'data' }] } };
+  assert.match(cli(makeApp(tempDir(), { file })).stdout, /listed twice/);
+  assert.match(cli(makeApp(tempDir(), { file: { ...macos('~/.example'), spec: -1 } })).stdout, /not a valid version/);
+  const { spec, ...noSpec } = macos('~/.example');
+  assert.match(cli(makeApp(tempDir(), { file: noSpec })).stdout, /not an appfiles document/);
+});
+
+test('the reference reader escapes control characters from the file', { skip: !hasPlutil }, () => {
+  const file = { spec: 0, name: 'T\u001b[2J', macos: { id: 'com.example.test', paths: [{ path: '~/.example\u001b[2J', kind: 'data' }] } };
+  const { stdout } = cli(makeApp(tempDir(), { file }));
+  assert.doesNotMatch(stdout, /\u001b/);
+  assert.match(stdout, /\\u001b/);
+});
+
+const inFolder = (home, file) => {
+  const folder = tempDir();
+  writeFileSync(join(folder, 'appfiles.json'), typeof file === 'string' ? file : JSON.stringify(file));
+  return spawnSync(process.execPath, [fileURLToPath(new URL('./cli.mjs', import.meta.url)), folder], { encoding: 'utf8', env: { ...process.env, HOME: home } });
+};
+const here = process.platform === 'darwin' ? 'macos' : 'linux';
+const local = (...paths) => ({ spec: 0, name: 'T', [here]: { id: 'x', paths: paths.map(([path, kind = 'data']) => ({ path, kind })) } });
+
+test('the reference reader judges every section, and this machine first', () => {
+  const other = here === 'macos' ? 'linux' : 'macos';
+  const file = { spec: 0, name: 'T', windows: { id: 'x', paths: [{ path: '%APPDATA%\\Example', kind: 'data' }] }, [other]: { id: 'x', paths: [{ path: '~/.ssh', kind: 'cache' }] }, [here]: { id: 'x', paths: [{ path: '~/.example', kind: 'data' }] } };
+  const run = inFolder(tempDir(), file);
+  assert.equal(run.status, 1, run.stdout);
+  assert.match(run.stdout, /rejected\s+~\/\.ssh/);
+  assert.match(run.stdout, /absent/);
+  assert.ok(run.stdout.indexOf('~/.example') < run.stdout.indexOf('%APPDATA%'));
+});
+
+test('the reference reader ignores a file with no name, or a section with no id', () => {
+  const noName = inFolder(tempDir(), { spec: 0, linux: { paths: [] } });
+  assert.equal(noName.status, 1);
+  assert.doesNotMatch(noName.stdout, /undefined/);
+  const noId = inFolder(tempDir(), { spec: 0, name: 'T', linux: { paths: [{ path: '~/.example', kind: 'data' }] } });
+  assert.equal(noId.status, 1);
+  assert.doesNotMatch(noId.stdout, /undefined/);
+});
+
+test('the reference reader keeps valid entries next to one nested too deep to show', () => {
+  const deep = `${'['.repeat(100000)}${']'.repeat(100000)}`;
+  const file = `{"spec":0,"name":"T","${here}":{"id":"x","paths":[{"path":${deep},"kind":"data"},{"path":"~/.example","kind":"data"}]}}`;
+  const run = inFolder(tempDir(), file);
+  assert.equal(run.status, 1, run.stderr);
+  assert.match(run.stdout, /data\s+~\/\.example/);
+});
+
+test('a file over the size limit is refused before it is parsed', () => {
+  const big = join(tempDir(), 'appfiles.json');
+  writeFileSync(big, ' '.repeat(1024 * 1024 + 1));
+  const run = cli(big);
+  assert.equal(run.status, 2);
+  assert.match(run.stderr, /1 MiB/);
+});
+
+test('the reference reader refuses a package whose folders link out of it', { skip: !hasPlutil }, () => {
+  const folder = tempDir();
+  const outside = makeApp(folder, { file: macos('~/.example') });
+  const app = join(folder, 'Other.app');
+  mkdirSync(app);
+  symlinkSync(join(outside, 'Contents'), join(app, 'Contents'));
+  const run = cli(app);
+  assert.equal(run.status, 1);
+  assert.match(run.stdout, /is a link/);
+  assert.doesNotMatch(run.stdout, /identity matches/);
+});
+
+test('a Mac app with no plutil to ask is ignored', { skip: hasPlutil }, () => {
+  const run = cli(makeApp(tempDir(), { file: macos('~/.example') }));
+  assert.equal(run.status, 1);
+  assert.match(run.stdout, /cannot read its bundle identifier/);
+});
+
+test('the reference reader says what it does not follow, and a deep path cannot stall it', () => {
+  const home = tempDir();
+  mkdirSync(join(home, '.real'));
+  symlinkSync(join(home, '.real'), join(home, '.link'));
+  const run = inFolder(home, local(['~/.link'], ['~/.exam*'], [`~/${'a/'.repeat(400000)}a`]));
+  assert.equal(run.status, 0, run.stdout);
+  assert.match(run.stdout, /~\/\.link\s+\(link not followed\)/);
+  assert.match(run.stdout, /~\/\.exam\*\s+\(wildcard not expanded\)/);
+});
+
+test('the reference reader treats a section of the wrong shape as a rejection', () => {
+  const other = here === 'macos' ? 'linux' : 'macos';
+  assert.equal(inFolder(tempDir(), { ...local(['~/.example']), [other]: [1] }).status, 1);
+  assert.equal(inFolder(tempDir(), { spec: 0, name: 'T', [here]: { id: 'x' } }).status, 1);
+  assert.equal(inFolder(tempDir(), { spec: 0, name: 'T', [here]: { id: 'x', paths: 'x' } }).status, 1);
+});
+
+test('a file that is not UTF-8 is refused', () => {
+  const bad = join(tempDir(), 'appfiles.json');
+  writeFileSync(bad, Buffer.from('{"spec":0,"name":"T\xff","macos":{"id":"x","paths":[]}}', 'latin1'));
+  assert.equal(cli(bad).status, 2);
+});
+
+test('an app folder with no Resources has no file, rather than a link', { skip: !hasPlutil }, () => {
+  const app = join(tempDir(), 'Empty.app');
+  mkdirSync(app);
+  assert.match(cli(app).stdout, /no appfiles\.json/);
 });

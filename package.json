@@ -4,7 +4,7 @@
   "private": true,
   "description": "Validator for appfiles.json, a file that says which files an app leaves on your machine",
   "type": "module",
-  "bin": { "appfiles": "validate.mjs" },
+  "bin": { "appfiles": "cli.mjs" },
   "scripts": { "test": "node --test validate.test.mjs" },
   "engines": { "node": ">=18" },
   "repository": "github:tw93/appfiles",

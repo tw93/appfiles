@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/tw93/appfiles/main/appfiles.schema.json",
   "title": "appfiles.json",
   "description": "The files and system entries an app creates outside its package. This schema checks the shape; validate.mjs also checks the path rules in SPEC.md.",
   "type": "object",
@@ -10,6 +11,7 @@
     { "required": ["linux"] }
   ],
   "properties": {
+    "$schema": { "type": "string" },
     "spec": { "const": 0 },
     "name": { "type": "string", "minLength": 1 },
     "macos": {
