@@ -1,0 +1,53 @@
+<svg width="1000" height="470" viewBox="0 0 1000 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An appfiles.json inside an app's package lists each path the app creates outside it, with one of seven kinds: user, component, data, config, state, log, cache.">
+  <style>
+    :root { --ground: #FDFCF9; --edge: #E4E1D8; --ink: #363433; --meta: #6F6B66; }
+    @media (prefers-color-scheme: dark) { :root { --ground: #1E1D1B; --edge: #3A3835; --ink: #ECE9E2; --meta: #A8A49C; } }
+    .card { fill: var(--ground); stroke: var(--edge); stroke-width: 1; }
+    .rule { stroke: var(--edge); stroke-width: 1; }
+    .file { fill: var(--ink); font: 600 17px ui-monospace, Menlo, Consolas, monospace; }
+    .where { fill: var(--meta); font: 14px ui-monospace, Menlo, Consolas, monospace; }
+    .kind { fill: var(--ink); font: 600 15px -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .path { fill: var(--ink); font: 14px ui-monospace, Menlo, Consolas, monospace; }
+    .say { fill: var(--meta); font: 14px -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .dot { fill: var(--ink); }
+  </style>
+  <rect class="card" x="1" y="1" width="998" height="468" rx="14"/>
+  <text class="file" x="36" y="44">appfiles.json</text>
+  <text class="where" x="964" y="44" text-anchor="end">Example Notes.app/Contents/Resources</text>
+  <line class="rule" x1="1" y1="68" x2="999" y2="68"/>
+
+  <circle class="dot" cx="42" cy="100" r="6" opacity="1"/>
+  <text class="kind" x="60" y="105">user</text>
+  <text class="path" x="170" y="105">~/Documents/Example Notes</text>
+  <text class="say" x="964" y="105" text-anchor="end">Put there on purpose</text>
+
+  <circle class="dot" cx="42" cy="154" r="6" opacity=".84"/>
+  <text class="kind" x="60" y="159">component</text>
+  <text class="path" x="170" y="159">~/Library/LaunchAgents/com.example.notes.helper.plist</text>
+  <text class="say" x="964" y="159" text-anchor="end">Code outside the package</text>
+
+  <circle class="dot" cx="42" cy="208" r="6" opacity=".7"/>
+  <text class="kind" x="60" y="213">data</text>
+  <text class="path" x="170" y="213">~/Library/Application Support/Example Notes</text>
+  <text class="say" x="964" y="213" text-anchor="end">Hard to get back</text>
+
+  <circle class="dot" cx="42" cy="262" r="6" opacity=".56"/>
+  <text class="kind" x="60" y="267">config</text>
+  <text class="path" x="170" y="267">~/Library/Preferences/com.example.notes.plist</text>
+  <text class="say" x="964" y="267" text-anchor="end">Settings</text>
+
+  <circle class="dot" cx="42" cy="316" r="6" opacity=".42"/>
+  <text class="kind" x="60" y="321">state</text>
+  <text class="path" x="170" y="321">~/Library/Saved Application State/com.example.notes.savedState</text>
+  <text class="say" x="964" y="321" text-anchor="end">Harmless to lose</text>
+
+  <circle class="dot" cx="42" cy="370" r="6" opacity=".3"/>
+  <text class="kind" x="60" y="375">log</text>
+  <text class="path" x="170" y="375">~/Library/Logs/Example Notes</text>
+  <text class="say" x="964" y="375" text-anchor="end">Logs and crash reports</text>
+
+  <circle class="dot" cx="42" cy="424" r="6" opacity=".18"/>
+  <text class="kind" x="60" y="429">cache</text>
+  <text class="path" x="170" y="429">~/Library/Caches/com.example.notes</text>
+  <text class="say" x="964" y="429" text-anchor="end">Rebuilt by itself</text>
+</svg>

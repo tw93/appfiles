@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { test } from 'node:test';
+import { fileURLToPath } from 'node:url';
 import { validate } from './validate.mjs';
 
 const macos = (path, kind = 'data', extra = {}) => ({
@@ -219,4 +223,67 @@ test('checks the top level', () => {
 
 test('ignores unknown fields', () => {
   assert.ok(isValid({ ...macos('~/.example'), future: true }));
+});
+
+const repoFile = (name) => readFileSync(new URL(`./${name}`, import.meta.url), 'utf8');
+
+test('the examples in the spec and both READMEs are valid', () => {
+  for (const name of ['SPEC.md', 'README.md', 'README_CN.md']) {
+    const example = /```json\n([\s\S]*?)```/.exec(repoFile(name))[1];
+    assert.deepEqual(validate(JSON.parse(example)), { errors: [], warnings: [] }, name);
+  }
+});
+
+test('the kinds and registration types in the spec match the schema and the validator', () => {
+  const spec = repoFile('SPEC.md');
+  const schema = JSON.parse(repoFile('appfiles.schema.json'));
+  const section = (title) => spec.slice(spec.indexOf(`## ${title}`), spec.indexOf('\n## ', spec.indexOf(`## ${title}`) + 1));
+
+  const kinds = [...section('5. Kinds').matchAll(/^\| `([a-z]+)` \|/gm)].map((match) => match[1]);
+  assert.deepEqual(kinds, schema.$defs.path.properties.kind.enum);
+  for (const kind of kinds) {
+    assert.ok(isValid(macos('~/Library/Application Support/Example', kind)), kind);
+  }
+
+  const platforms = { macOS: 'macos', Windows: 'windows', Linux: 'linux' };
+  const listed = { macos: [], windows: [], linux: [] };
+  for (const match of section('7. Registrations').matchAll(/^\| (macOS|Windows|Linux) \| `([a-z-]+)` \|/gm)) {
+    listed[platforms[match[1]]].push(match[2]);
+  }
+  for (const platform of Object.values(platforms)) {
+    const allowed = schema.properties[platform].allOf[1].properties.registrations.items.properties.type.enum;
+    assert.deepEqual(listed[platform], allowed, platform);
+    for (const type of allowed) {
+      const id = type === 'registry' ? 'HKCU\\Software\\Example\\Notes' : 'example';
+      const document = { spec: 0, name: 'Test', [platform]: { id: 'example', paths: [], registrations: [{ type, id }] } };
+      assert.ok(isValid(document), `${platform} ${type}`);
+    }
+  }
+});
+
+test('the command line checks the file when run through a symlink, as npx does', () => {
+  const folder = mkdtempSync(join(tmpdir(), 'appfiles-'));
+  const link = join(folder, 'appfiles');
+  symlinkSync(fileURLToPath(new URL('./validate.mjs', import.meta.url)), link);
+  const run = (document) => {
+    const file = join(folder, 'appfiles.json');
+    writeFileSync(file, JSON.stringify(document));
+    return spawnSync(process.execPath, [link, file], { encoding: 'utf8' });
+  };
+
+  const good = run(macos('~/Library/Application Support/Example'));
+  assert.equal(good.status, 0);
+  assert.match(good.stdout, /: valid/);
+
+  const bad = run(macos('~/Library/Caches'));
+  assert.equal(bad.status, 1);
+  assert.match(bad.stdout, /names a shared root/);
+});
+
+test('relative links in the docs point at files in the repository', () => {
+  for (const name of ['README.md', 'README_CN.md', 'SPEC.md', 'CHANGELOG.md', 'appfiles.md']) {
+    for (const [, target] of repoFile(name).matchAll(/\]\((?!https?:|#)([^)#]+)[^)]*\)/g)) {
+      assert.ok(existsSync(new URL(`./${target}`, import.meta.url)), `${name} links to ${target}`);
+    }
+  }
 });

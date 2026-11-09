@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// Checks an appfiles.json against the rules in appfiles.md. No dependencies.
-// Usage: node validate.mjs path/to/appfiles.json
+// Checks an appfiles.json against the rules in SPEC.md. No dependencies.
+// Usage: npx github:tw93/appfiles path/to/appfiles.json
 // Exit codes: 0 valid, 1 invalid, 2 could not read the file.
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const KINDS = new Set(['user', 'component', 'data', 'config', 'state', 'log', 'cache']);
@@ -301,10 +301,12 @@ export function validate(document) {
   return { errors, warnings };
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+// npx runs this through a symlink, so compare real paths: a plain comparison
+// skips the check and exits 0, which reads as a pass.
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const file = process.argv[2];
   if (!file) {
-    console.error('usage: node validate.mjs path/to/appfiles.json');
+    console.error('usage: appfiles path/to/appfiles.json');
     process.exit(2);
   }
   let document;

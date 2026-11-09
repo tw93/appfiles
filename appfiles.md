@@ -2,6 +2,8 @@
 
 You are adding `appfiles.json` to an app. It is one small file, shipped inside the app's package, that says which files and system entries the app creates outside its package and what each one is. Backup, migration, cleanup and uninstall tools read it instead of guessing.
 
+Read the format first: https://raw.githubusercontent.com/tw93/appfiles/main/SPEC.md. It holds the fields, kinds, path rules and registration types these steps refer to.
+
 Work through the steps in order. Do not skip step 6: frameworks and libraries write files the source never mentions.
 
 ## Step 1: Identify the app
@@ -130,18 +132,7 @@ List the top folder the app itself creates and alone owns: `~/Example`, not only
 
 A single file you name in a shared folder is fine, such as `~/.local/bin/example` or `%LOCALAPPDATA%\Microsoft\WindowsApps\example.cmd`.
 
-**Do not list**
-
-- Anything inside the app's own package.
-- A parent folder shared by the vendor's other products. List `~/Library/Application Support/Example/Notes`, never `~/Library/Application Support/Example`.
-- What the OS keeps about the app: privacy permissions, recent document lists, LaunchServices records.
-- A location the user picked in the app at runtime. You can list the default one, as `user`, unless it is a personal folder itself, such as `~/Movies`.
-- Temporary folders such as `$TMPDIR` and `%TEMP%`. The OS clears them.
-- A file the app only edits but does not own, such as `~/.zshrc`.
-- Paths beside the app's exe in portable mode. They are inside its own folder.
-- Items in the Keychain, Credential Manager or another secret store. They are not files.
-- A license or trial record the app keeps on purpose so that it survives a reinstall. Tools should not reset it for the user.
-- Apps this app generates, when it is a tool that makes other apps. Each has its own ID and ships its own file.
+Leave out everything in section 8 of the spec, including the package itself, shared vendor folders, secret stores and trial records.
 
 If another app reads or writes a path too, name that app's ID in `shared_with`, or the tool's plain name when it has no ID. Tools keep the path while any of those apps is installed.
 
@@ -151,22 +142,7 @@ A folder in `~/Documents` and the other personal folders is `user` as a whole, e
 
 Add one `registrations` entry for each thing the app registers that is not a file, even when the official uninstaller removes it. Read the installer script, the builder config, the entitlements and the launch code.
 
-| Platform | `type` | `id` |
-|---|---|---|
-| macOS | `launchd` | Job label |
-| macOS | `login-item` | Bundle ID of the login item, or its name |
-| macOS | `pkg` | Package receipt ID from `pkgutil --pkgs` |
-| macOS | `system-extension` | Extension bundle ID |
-| macOS | `kext` | Kernel extension bundle ID |
-| Windows | `registry` | Full key, starting with `HKCU\` or `HKLM\`. URL protocols, file associations and shell extensions are registry keys too. `HKCR\x` is a merged view: write `HKCU\Software\Classes\x` or `HKLM\SOFTWARE\Classes\x`, whichever the install scope writes. `QSettings` on Windows writes `HKCU\Software\<org>\<app>` |
-| Windows | `run-value` | Value name under `...\CurrentVersion\Run` |
-| Windows | `service` | Service name |
-| Windows | `scheduled-task` | Task path |
-| Windows | `firewall-rule` | Rule name. Search installers for `netsh advfirewall` and `FirewallRule`. An app that listens on a network port also gets a rule when the user accepts the Windows prompt, named after the exe's file description |
-| Windows | `path-entry` | The folder added to `PATH`, using the default install location |
-| Windows | `package` | Package Family Name of a sparse or helper MSIX package |
-| Linux | `systemd-unit` | Unit name |
-| Linux | `package` | Package name |
+The types, and what each `id` holds, are in section 7 of the spec. Search installers for `netsh advfirewall` and `FirewallRule` as well.
 
 Files that belong with an entry, such as a launchd plist in `~/Library/LaunchAgents`, still go in `paths`, as `component`.
 
@@ -242,32 +218,11 @@ A channel build with its own identifier, such as a beta, ships its own file with
 }
 ```
 
-Path rules:
-
-- **macOS** paths start with `~/` or `/Library/`. A command-line link is also allowed as `/usr/local/bin/<name>`, kind `component`.
-- **Windows** paths start with `%APPDATA%`, `%LOCALAPPDATA%`, `%PROGRAMDATA%` or `%USERPROFILE%`.
-- **Linux** paths start with `~/`, `$XDG_CONFIG_HOME/`, `$XDG_DATA_HOME/`, `$XDG_STATE_HOME/`, `$XDG_CACHE_HOME/`, `/etc/` or `/var/lib/`.
-- Write literal names. A path has no other variables and no `..`.
-- `*` is allowed only in the last component, after at least three literal characters: `~/Library/Preferences/ByHost/com.example.notes.*`.
-- A path never names a shared root itself, such as `~/Library/Caches` or `%APPDATA%`.
-- `~/Documents`, `~/Desktop`, `~/Downloads`, `~/Movies`, `~/Music` and `~/Pictures` hold `user` entries only.
-
-If something the app writes cannot follow these rules, such as a file in `/etc` on macOS, one under `%ProgramFiles%`, or a registration name with a per-user part, leave it out and say so in your handoff.
-
-The file has no scripts and no commands, and it never will. It describes. It does not instruct.
+Every path follows section 6 of the spec. If something the app writes cannot, such as a file in `/etc` on macOS, one under `%ProgramFiles%`, or a registration name with a per-user part, leave it out and say so in your handoff.
 
 ## Step 8: Put it in the package
 
-The location is fixed, so tools check one path and read no other configuration.
-
-| Package | Location |
-|---|---|
-| macOS app | `<App>.app/Contents/Resources/appfiles.json` |
-| Windows unpackaged | Beside the main `.exe` |
-| Windows MSIX | Package root |
-| Linux deb, rpm | `/usr/share/appfiles/<id>.json` |
-| Linux AppImage | `usr/share/appfiles/<id>.json` inside the AppDir |
-| Linux Flatpak | `/app/share/appfiles/<id>.json` |
+The location for each package type is fixed, in section 3 of the spec.
 
 How to get it there:
 
@@ -286,26 +241,9 @@ Open the built package and confirm the file is at that exact path. On macOS, do 
 Run this and fix every error:
 
 ```sh
-node validate.mjs path/to/appfiles.json
+npx github:tw93/appfiles path/to/appfiles.json
 ```
 
-`validate.mjs` is in this repository, needs no dependencies, and needs Node 18 or later. `appfiles.schema.json` is here too for editors and other tools.
+It needs Node 18 or later and installs no dependencies.
 
 Tell the user which platforms you ran in step 6 and which you only read from source.
-
-## For tools that read this file
-
-An `appfiles.json` comes from the app it describes, so it is untrusted input. A bad one could name another app's folder or a user's keys. Tools that read it must follow these rules.
-
-- It adds candidates and labels. It never overrides a tool's own protections, and it never widens what a tool may touch.
-- Compare the section's `id` with the identity of the package it came from, and ignore the file on a mismatch. On Windows, any listed value may match the uninstall key name, the `DisplayName` or the Package Family Name.
-- Reject any entry that breaks the path rules above, and keep the valid ones.
-- Never delete a `user` entry by default. Show `data` before deleting it.
-- Keep a path while any app in `shared_with` is installed, and keep it when any other installed app claims it.
-- Read the file before running a vendor uninstaller, which may remove it.
-- Ignore unknown fields. Ignore the whole file if `spec` is higher than you understand.
-- Paths may not exist. An app that never used a feature never wrote its folder.
-- Remove a `component` in a shared bin folder only when it links into the app's own package.
-- On Windows, resolve `%USERPROFILE%\Documents` and the other personal folders through the known folder API, since they are often redirected.
-
-`spec` is `0` while the format can still change. It goes up only when an old reader would misread a new file. New optional fields do not raise it.
