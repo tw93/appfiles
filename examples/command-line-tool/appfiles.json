@@ -1,0 +1,42 @@
+{
+  "spec": 0,
+  "name": "exampled",
+  "macos": {
+    "id": "com.example.exampled",
+    "paths": [
+      { "path": "~/.exampled", "kind": "data" },
+      { "path": "~/.exampled/cache", "kind": "cache" },
+      { "path": "~/.config/exampled", "kind": "user" },
+      { "path": "~/Library/LaunchAgents/com.example.exampled.plist", "kind": "component" },
+      { "path": "/usr/local/bin/exampled", "kind": "component" }
+    ],
+    "registrations": [
+      { "type": "launchd", "id": "com.example.exampled" }
+    ]
+  },
+  "windows": {
+    "id": "exampled",
+    "paths": [
+      { "path": "%USERPROFILE%\\.exampled", "kind": "data" },
+      { "path": "%USERPROFILE%\\.exampled\\cache", "kind": "cache" },
+      { "path": "%USERPROFILE%\\.config\\exampled", "kind": "user" },
+      { "path": "%LOCALAPPDATA%\\Microsoft\\WindowsApps\\exampled.cmd", "kind": "component" }
+    ],
+    "registrations": [
+      { "type": "scheduled-task", "id": "\\exampled\\Update" }
+    ]
+  },
+  "linux": {
+    "id": "exampled",
+    "paths": [
+      { "path": "~/.exampled", "kind": "data" },
+      { "path": "~/.exampled/cache", "kind": "cache" },
+      { "path": "$XDG_CONFIG_HOME/exampled", "kind": "user" },
+      { "path": "$XDG_CONFIG_HOME/systemd/user/exampled.service", "kind": "component" },
+      { "path": "~/.local/bin/exampled", "kind": "component" }
+    ],
+    "registrations": [
+      { "type": "systemd-unit", "id": "exampled.service" }
+    ]
+  }
+}

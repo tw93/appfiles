@@ -7,6 +7,7 @@
     <a href="appfiles.md">Agent 步骤</a> ·
     <a href="appfiles.schema.json">Schema</a> ·
     <a href="reserved.json">保留名单</a> ·
+    <a href="examples">样例</a> ·
     <a href="tests/vectors.json">一致性测试</a> ·
     <a href="CHANGELOG.md">更新记录</a>
   </p>
@@ -99,6 +100,20 @@ npx github:tw93/appfiles /Applications/Example.app
 - **一份文件管所有平台**：一个 App 发三个系统，也只维护一份
 - **Agent 来写，跑起来验证**：框架会写很多源码里看不到的文件，所以步骤最后一定要把 App 跑一遍对照
 
+## 和已有的做法有啥不一样
+
+| 已有做法 | 它做什么 | 没解决什么 |
+|---|---|---|
+| [Homebrew `zap`](https://docs.brew.sh/Cask-Cookbook#stanza-zap) | 别人给每个 cask 手写要删的路径 | 只有 Homebrew 用，也不说每条是什么 |
+| [Mackup](https://github.com/lra/mackup) | 社区维护每个 App 的设置文件清单，用来备份 | 只管设置，清单也只有它自己用 |
+| [BleachBit CleanerML](https://github.com/bleachbit/bleachbit)、[Winapp2](https://github.com/MoscaDotTo/Winapp2) | 社区维护每个 App 的清理规则 | 写给清理工具，说的是该删什么，不是 App 留下了什么 |
+| [Android 备份规则](https://developer.android.com/identity/data/autobackup) | App 自己说要备份什么 | 只有 Android，也只管备份 |
+| [AppStream](https://www.freedesktop.org/software/appstream/docs/) | App 向软件中心介绍自己 | 写的是名字和版本，不是留下的文件 |
+| [XDG Base Directory](https://specifications.freedesktop.org/basedir-spec/latest/) | 规定每类文件该放哪 | 只是约定，没人说清某个 App 用了哪些目录 |
+| 沙盒（Mac 容器、MSIX、Flatpak） | 系统知道 App 的私有目录 | 沙盒外的 App，或者它们写到别处的文件，还是没人管 |
+
+`appfiles.json` 由做 App 的人自己写，跟着安装包走，三个平台都能写，说的是每条路径是什么，不是该拿它怎么办，所以备份工具和卸载工具可以读同一份文件。
+
 ## 谁在用
 
 下面这些 App 的源码里已经带上了这个文件，会跟着各自的下一个版本到用户手上：
@@ -135,4 +150,4 @@ npx github:tw93/appfiles /Applications/Example.app
 
 ## License
 
-MIT License，欢迎使用和参与开发。
+MIT License，欢迎使用和[参与开发](CONTRIBUTING.md)。

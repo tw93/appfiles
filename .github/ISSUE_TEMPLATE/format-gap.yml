@@ -1,0 +1,30 @@
+name: The format cannot describe my app
+description: A path or system entry the spec refuses, or has no way to say
+body:
+  - type: input
+    id: app
+    attributes:
+      label: App
+      description: Its name and a link, and the framework if you know it
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: [macOS, Windows, Linux]
+    validations:
+      required: true
+  - type: textarea
+    id: entry
+    attributes:
+      label: The path or entry
+      description: What the app really writes, and what the validator said about it
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What it is
+      description: What it holds, and what happens if it is deleted

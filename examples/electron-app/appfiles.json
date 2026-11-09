@@ -1,0 +1,47 @@
+{
+  "spec": 0,
+  "name": "Example Chat",
+  "macos": {
+    "id": "com.example.chat",
+    "paths": [
+      { "path": "~/Library/Application Support/Example Chat", "kind": "data" },
+      { "path": "~/Library/Application Support/Example Chat/Cache", "kind": "cache" },
+      { "path": "~/Library/Application Support/Example Chat/Code Cache", "kind": "cache" },
+      { "path": "~/Library/Application Support/Example Chat/GPUCache", "kind": "cache" },
+      { "path": "~/Library/Caches/com.example.chat", "kind": "cache" },
+      { "path": "~/Library/Caches/com.example.chat.ShipIt", "kind": "cache" },
+      { "path": "~/Library/Caches/example-chat-updater", "kind": "cache" },
+      { "path": "~/Library/HTTPStorages/com.example.chat", "kind": "cache" },
+      { "path": "~/Library/HTTPStorages/com.example.chat.binarycookies", "kind": "cache" },
+      { "path": "~/Library/Logs/Example Chat", "kind": "log" },
+      { "path": "~/Library/Preferences/com.example.chat.plist", "kind": "config" },
+      { "path": "~/Library/Preferences/com.example.chat.helper.plist", "kind": "config" },
+      { "path": "~/Library/Preferences/ByHost/com.example.chat.ShipIt.*", "kind": "cache" },
+      { "path": "~/Library/Saved Application State/com.example.chat.savedState", "kind": "state" }
+    ]
+  },
+  "windows": {
+    "id": "6f2b7a1e-3c4d-5e8f-9a0b-1c2d3e4f5a6b",
+    "paths": [
+      { "path": "%APPDATA%\\Example Chat", "kind": "data" },
+      { "path": "%APPDATA%\\Example Chat\\Cache", "kind": "cache" },
+      { "path": "%APPDATA%\\Example Chat\\Code Cache", "kind": "cache" },
+      { "path": "%APPDATA%\\Example Chat\\GPUCache", "kind": "cache" },
+      { "path": "%APPDATA%\\Example Chat\\logs", "kind": "log" },
+      { "path": "%LOCALAPPDATA%\\example-chat-updater", "kind": "cache" }
+    ],
+    "registrations": [
+      { "type": "registry", "id": "HKCU\\Software\\Classes\\example-chat" },
+      { "type": "run-value", "id": "Example Chat" }
+    ]
+  },
+  "linux": {
+    "id": "com.example.Chat",
+    "paths": [
+      { "path": "$XDG_CONFIG_HOME/Example Chat", "kind": "data" },
+      { "path": "$XDG_CONFIG_HOME/Example Chat/Cache", "kind": "cache" },
+      { "path": "$XDG_CONFIG_HOME/Example Chat/Code Cache", "kind": "cache" },
+      { "path": "$XDG_CONFIG_HOME/Example Chat/GPUCache", "kind": "cache" }
+    ]
+  }
+}

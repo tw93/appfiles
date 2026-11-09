@@ -1,0 +1,22 @@
+{
+  "spec": 0,
+  "name": "Example Reader",
+  "macos": {
+    "id": "com.example.reader",
+    "paths": [
+      { "path": "~/Library/Application Support/Example Reader", "kind": "data" },
+      { "path": "~/Library/Application Support/Example Reader/Thumbnails", "kind": "cache" },
+      { "path": "~/Library/Caches/com.example.reader", "kind": "cache" },
+      { "path": "~/Library/HTTPStorages/com.example.reader", "kind": "cache" },
+      { "path": "~/Library/HTTPStorages/com.example.reader.binarycookies", "kind": "cache" },
+      { "path": "~/Library/WebKit/com.example.reader", "kind": "data" },
+      { "path": "~/Library/Logs/Example Reader", "kind": "log" },
+      { "path": "~/Library/Preferences/com.example.reader.plist", "kind": "config" },
+      { "path": "~/Library/Saved Application State/com.example.reader.savedState", "kind": "state" },
+      { "path": "~/Documents/Example Reader", "kind": "user" }
+    ],
+    "registrations": [
+      { "type": "login-item", "id": "com.example.reader" }
+    ]
+  }
+}

@@ -7,6 +7,7 @@
     <a href="appfiles.md">Agent steps</a> ·
     <a href="appfiles.schema.json">Schema</a> ·
     <a href="reserved.json">Reserved names</a> ·
+    <a href="examples">Examples</a> ·
     <a href="tests/vectors.json">Conformance tests</a> ·
     <a href="CHANGELOG.md">Changelog</a>
   </p>
@@ -99,6 +100,20 @@ Seven kinds, ordered from what must never be lost to what rebuilds itself. When 
 - **One file, every platform**: an app that ships on three systems keeps one source
 - **Written by agents, checked by running**: frameworks write files the source never mentions, so the steps end with running the app and comparing
 
+## How It Differs
+
+| Existing | What it does | What it leaves open |
+|---|---|---|
+| [Homebrew `zap`](https://docs.brew.sh/Cask-Cookbook#stanza-zap) | Per-cask lists of paths to remove, written by others | Homebrew only, and no word on what each path is |
+| [Mackup](https://github.com/lra/mackup) | Community list of settings files per app, for backup | Settings only, and each tool keeps its own list |
+| [BleachBit CleanerML](https://github.com/bleachbit/bleachbit), [Winapp2](https://github.com/MoscaDotTo/Winapp2) | Community cleaning rules per app | Written for cleaning tools, as what to delete rather than what the app keeps |
+| [Android backup rules](https://developer.android.com/identity/data/autobackup) | The app says what to back up | Android only, and only for backup |
+| [AppStream](https://www.freedesktop.org/software/appstream/docs/) | The app describes itself to software centers | Names and releases, not the files it leaves |
+| [XDG Base Directory](https://specifications.freedesktop.org/basedir-spec/latest/) | Where each type of file should go | A convention, so nothing says which folders one app uses |
+| Sandboxes (Mac containers, MSIX, Flatpak) | The system knows the app's private folder | Nothing for apps outside them, or for what they write elsewhere |
+
+`appfiles.json` is written by the app's own maker, ships inside the package, covers three platforms, and says what each path is rather than what to do with it, so a backup tool and an uninstaller can read the same file.
+
 ## Who Ships It
 
 These apps carry the file in their source, and it reaches users with each app's next release:
@@ -135,4 +150,4 @@ I don't expect this to spread quickly, so I started with my own apps.
 
 ## License
 
-MIT License. Please feel free to use and contribute to the development.
+MIT License. Please feel free to use and [contribute](CONTRIBUTING.md) to the development.
