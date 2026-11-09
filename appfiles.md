@@ -12,12 +12,12 @@ Find, for each platform the app ships on:
 
 - **macOS**: the bundle identifier (`CFBundleIdentifier`) of the released build. Read it from a built package when you have one. In source, packaging config and release scripts win over a development default. Electron: `appId` in the builder config, or `com.electron.<name>` when none is set. A command-line app or daemon with no bundle uses its launchd label, or else its name.
 - **Windows**: the key name under `...\CurrentVersion\Uninstall`, using the table below.
-- **Linux**: the desktop file ID, or the Flatpak app ID. This section of the format is a draft.
+- **Linux**: the desktop file ID, or the Flatpak app ID. A package type with its own ID ships its own file with that `id`. This section of the format is a draft.
 
 | Windows package | `id` |
 |---|---|
 | MSIX | Package Family Name |
-| Inno Setup | `AppId` plus `_is1`, with the script's `{{` written as `{`. With no `AppId`, Inno uses `AppName` |
+| Inno Setup | `AppId` plus `_is1`, with the script's `{{` written as `{`. An `AppId` with no braces stays without them. With no `AppId`, Inno uses `AppName` |
 | Tauri NSIS | The product name |
 | electron-builder NSIS | `nsis.guid`, or the UUID v5 of `appId` in namespace `50e065bc-3134-11e6-9bab-38c9862bdaf3` |
 | Other NSIS | The key name the script writes |
@@ -43,7 +43,7 @@ Search the code for the calls below, then resolve each to a literal path. Write 
 | Rust | `dirs::`, `directories::`, `home_dir`, `XDG_` | See the base directory table below |
 | Swift, Objective-C | `UserDefaults`, `FileManager`, `applicationSupportDirectory`, `cachesDirectory`, `URLCache`, `WKWebView`, `NSHomeDirectory`, `containerURL`, `com.apple.security.app-sandbox` | See step 3. The entitlement decides which macOS list applies |
 | Go | `os.UserConfigDir`, `os.UserCacheDir`, `os.UserHomeDir` | Config: `~/Library/Application Support`, `%APPDATA%`, `$XDG_CONFIG_HOME`. Cache: `~/Library/Caches`, `%LOCALAPPDATA%`, `$XDG_CACHE_HOME` |
-| C#, .NET, WPF, WinUI | `Environment.SpecialFolder`, `Registry.CurrentUser`, `ApplicationData.Current`, `userDataFolder`, `Settings.settings` | `ApplicationData` is `%APPDATA%`, `LocalApplicationData` is `%LOCALAPPDATA%`, `CommonApplicationData` is `%PROGRAMDATA%` |
+| C#, .NET, WPF, WinUI | `Environment.SpecialFolder`, `Registry.CurrentUser`, `ApplicationData.Current`, `userDataFolder`, `Settings.settings` | `ApplicationData` is `%APPDATA%`, `LocalApplicationData` is `%LOCALAPPDATA%`, `CommonApplicationData` is `%PROGRAMDATA%`, `MyDocuments` is `%USERPROFILE%\Documents`, `UserProfile` is `%USERPROFILE%` |
 | Qt | `QStandardPaths`, `QSettings`, `IniFormat`, `setOrganizationName`, `setOrganizationDomain`, `setApplicationName` | `<app>` below is `<org>/<app>` when an organization name is set. `AppDataLocation`: `~/Library/Application Support/<app>`, `%APPDATA%\<app>`, `~/.local/share/<app>`. `AppLocalDataLocation` on Windows: `%LOCALAPPDATA%\<app>`. `CacheLocation`: `~/Library/Caches/<app>`, `%LOCALAPPDATA%\<app>\cache`, `~/.cache/<app>`. `QSettings`: `~/Library/Preferences/com.<org>.<app>.plist`, `HKCU\Software\<org>\<app>`, `~/.config/<org>/<app>.conf`. With `IniFormat`: `~/.config/<org>/<app>.ini` on macOS and Linux, `%APPDATA%\<org>\<app>.ini` on Windows |
 | Flutter | `path_provider`, `getApplicationSupportDirectory`, `getApplicationCacheDirectory`, `shared_preferences` | Support: `~/Library/Application Support/<id>`, `%APPDATA%\<CompanyName>\<ProductName>` from `windows/runner/Runner.rc`, `$XDG_DATA_HOME/<id>`. Confirm them in step 6 |
 | C, C++ | `SHGetKnownFolderPath`, `%APPDATA%`, `getenv`, `RegCreateKey`, `NSSearchPath`, `XDG_` | Whatever the code builds |
@@ -92,7 +92,7 @@ Add these when the condition holds:
 A sandboxed app has `com.apple.security.app-sandbox` set to true in its entitlements.
 
 - `~/Library/Containers/<id>`, kind `data`. Everything the sandboxed app writes is inside it, so do not also list the paths above. An extension in the bundle has its own container under its own bundle ID.
-- `~/Library/Group Containers/<group id>`, kind `data`, for each App Group in the entitlements. Replace `$(TeamIdentifierPrefix)` with the real team ID from the signing config. If you cannot find it, leave the entry out and say so in your handoff.
+- `~/Library/Group Containers/<group id>`, kind `data`, for each App Group in the entitlements. An app that is not sandboxed needs this too when its source calls `containerURL(forSecurityApplicationGroupIdentifier:)`. Replace `$(TeamIdentifierPrefix)` with the real team ID from the signing config. If you cannot find it, leave the entry out and say so in your handoff.
 - `~/Library/Application Scripts/<id>`, kind `state`, for the app and each extension.
 
 **Electron**
@@ -106,7 +106,7 @@ A sandboxed app has `com.apple.security.app-sandbox` set to true in its entitlem
 
 - MSIX: writes to `AppData` go to the package's private location and Windows removes them at uninstall. List only what the app writes elsewhere, such as under `%USERPROFILE%`, or with virtualization turned off.
 - Unpackaged: everything under `%APPDATA%`, `%LOCALAPPDATA%` and `%PROGRAMDATA%`, plus registry keys. WebView2 stores its folder wherever the app says, and beside the exe as `<exe>.WebView2` by default.
-- Skip the install folder and its shortcuts. Tools find those through the uninstall key. List everything else, even what the official uninstaller removes, since backup tools read this file too and a portable build has no uninstaller.
+- Skip the install folder and its shortcuts. Tools find those through the uninstall key. List everything else, even what the official uninstaller removes, since backup tools read this file too and a portable build has no uninstaller. What portable mode writes beside the exe is inside its own folder, so that stays out.
 
 **Linux (draft)**
 
@@ -144,7 +144,9 @@ Add one `registrations` entry for each thing the app registers that is not a fil
 
 The types, and what each `id` holds, are in section 7 of the spec. Search installers for `netsh advfirewall` and `FirewallRule` as well.
 
-A file association on Windows has two parts. List the ProgID the app creates, such as `HKCU\Software\Classes\ExampleNotes.md`, and leave out `.md` itself, since other apps use that key too.
+A file association on Windows has two parts. List the ProgID the app creates, such as `HKCU\Software\Classes\ExampleNotes.md`, and leave out `.md` itself, since other apps use that key too. A registration names a key, so a value the app adds to a shared key, such as one under `RegisteredApplications`, stays out: say so in your handoff.
+
+An app that registers itself as a login item, through `SMAppService.mainApp`, uses its own bundle ID as the `id`, even when the user turns it on. When the framework picks a name, write that name: Electron's `setLoginItemSettings` uses the AppUserModelId for its `run-value`.
 
 Files that belong with an entry, such as a launchd plist in `~/Library/LaunchAgents`, still go in `paths`, as `component`.
 

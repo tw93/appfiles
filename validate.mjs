@@ -264,6 +264,45 @@ function checkPath(platform, rules, entry, where, errors, warnings) {
   }
 }
 
+const MAX_NAME_LENGTH = 255;
+
+// Section 9: whether a reader may select a path by default. id is the value that matched the
+// package and packageName comes from the package, never from the file. A caller judges the path
+// again after resolving links, written back in this form, and each path a wildcard expands to.
+export function tiedToApp(platform, path, id, packageName) {
+  if (!isText(path) || !PLATFORMS[platform]) return false;
+  const words = (text) => fold(text).split(/[^\p{L}\p{M}\p{N}]+/u).filter(Boolean);
+  const separator = separatorOf(platform);
+  const key = canonical(platform, path);
+  const prefix = PLATFORMS[platform].prefixes.map((item) => (platform === 'linux' ? item : fold(item))).find((item) => key.startsWith(item));
+  if (prefix === undefined) return false;
+  const roots = reservedFor(platform).shared.filter((root) => isInside(platform, key, root));
+  const rest = key.slice(roots.reduce((start, root) => Math.max(start, root.length + 1), prefix.length));
+  const star = rest.indexOf('*');
+  const literal = star === -1 ? rest : rest.slice(0, star);
+  const parts = literal.split(separator);
+  // From the first folder only: any deeper and a package named Default ties Google/Chrome/Default.
+  // A wildcard may finish the word before it, Goo* can be Google, and its folder is not whole.
+  const tokens = [];
+  const ends = new Set();
+  for (let index = 0; index < parts.length; index += 1) {
+    const found = words(parts[index]);
+    const open = star !== -1 && index === parts.length - 1;
+    if (open && /[\p{L}\p{M}\p{N}]$/u.test(literal.slice(-2))) found.pop();
+    for (const word of found) tokens.push(word);
+    if (!open) ends.add(tokens.length);
+  }
+  const matches = (name, runsOn) => name.length > 0 && (runsOn || ends.has(name.length)) && name.every((word, at) => word === tokens[at]);
+  // Checked before folding, since normalizing a crafted name can take minutes.
+  const usable = (text) => isText(text) && text.length <= MAX_NAME_LENGTH;
+  const idText = platform === 'linux' && usable(id) ? id.replace(/\.desktop$/i, '') : id;
+  const idWords = usable(idText) ? words(idText) : [];
+  const nameWords = usable(packageName) ? words(packageName) : [];
+  // Words may run on only after an id of three or more, which is the app's own. A shorter id can be
+  // a vendor, com.google, and a name can be another app's first word, Little in Little Snitch.
+  return matches(idWords, idWords.length >= 3) || matches(nameWords, false);
+}
+
 // One spelling for each thing a registration can name, before comparing it with the list.
 function normalizedRegistration(type, id) {
   const value = fold(id);

@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { validate } from './validate.mjs';
+import { tiedToApp, validate } from './validate.mjs';
 
 const macos = (path, kind = 'data', extra = {}) => ({
   spec: 0,
@@ -289,6 +289,23 @@ test('the schema accepts every valid document and refuses the wrong shapes', asy
   }
 });
 
+test('a path is tied to the app by its id or the package name, and by nothing else', () => {
+  const cases = JSON.parse(repoFile('tests/selection.json'));
+  assert.ok(cases.some((item) => item.tied) && cases.some((item) => !item.tied));
+  for (const { name, platform, path, id, package_name: packageName, tied } of cases) {
+    assert.equal(tiedToApp(platform, path, id, packageName), tied, name);
+  }
+  // Each of these stalled a reader for a minute or more before the check was bounded.
+  const started = Date.now();
+  const marks = `a${'́'.repeat(170000)}${'̣'.repeat(170000)}`;
+  assert.equal(tiedToApp('macos', `~/${'a/'.repeat(250000)}b`, 'com.other.app', 'Absent Name'), false);
+  assert.equal(tiedToApp('macos', `~/${'a'.repeat(1000000)}/*`, 'com.other.app', 'Absent Name'), false);
+  assert.equal(tiedToApp('macos', '~/.example', marks, marks), false);
+  assert.ok(Date.now() - started < 10000);
+  assert.equal(tiedToApp('macos', undefined, 'com.example.notes', 'Example Notes'), false);
+  assert.equal(tiedToApp('beos', '~/.example', 'com.example.notes', 'Example Notes'), false);
+});
+
 test('every reserved registry key is refused, and what an app adds inside a container is not', () => {
   const { registry_keys: keys, registry_subtrees: subtrees } = JSON.parse(repoFile('reserved.json')).windows;
   const registry = (id) => ({ spec: 0, name: 'T', windows: { id: 'x', paths: [], registrations: [{ type: 'registry', id }] } });
@@ -396,6 +413,35 @@ test('the reference reader ignores a file whose id is not the package', { skip: 
   assert.equal(run.status, 1);
   assert.match(run.stdout, /does not match/);
   assert.doesNotMatch(run.stdout, /~\/\.example/);
+});
+
+test('the reference reader leaves a path it cannot tie to the package unselected', { skip: !hasPlutil }, () => {
+  const folder = mkdtempSync(join(tmpdir(), 'appfiles-'));
+  const app = join(folder, 'Evil.app');
+  mkdirSync(join(app, 'Contents', 'Resources'), { recursive: true });
+  writeFileSync(join(app, 'Contents', 'Info.plist'), '<?xml version="1.0"?><plist version="1.0"><dict><key>CFBundleIdentifier</key><string>com.evil.app</string><key>CFBundleName</key><string>Evil</string></dict></plist>');
+  writeFileSync(join(app, 'Contents', 'Resources', 'appfiles.json'), JSON.stringify({ spec: 0, name: 'Google', macos: { id: 'com.evil.app', paths: [{ path: '~/Library/Application Support/Google/Chrome', kind: 'cache' }, { path: '~/Library/Caches/com.evil.app', kind: 'cache' }] } }));
+  const run = spawnSync(process.execPath, [fileURLToPath(new URL('./cli.mjs', import.meta.url)), app], { encoding: 'utf8' });
+  assert.match(run.stdout, /Google\/Chrome.*not tied to the app/);
+  assert.doesNotMatch(run.stdout, /com\.evil\.app\s+\(\w+\)\s+not tied/);
+});
+
+test('the reference reader ties a path to the package name, and judges nothing in a folder', { skip: !hasPlutil }, () => {
+  const folder = mkdtempSync(join(tmpdir(), 'appfiles-'));
+  const app = join(folder, 'Evil.app');
+  const bare = join(folder, 'bare');
+  const paths = [{ path: '~/Library/Application Support/Evil', kind: 'data' }, { path: '~/Library/Application Support/Google', kind: 'cache' }];
+  const document = JSON.stringify({ spec: 0, name: 'Google', macos: { id: 'com.other.app', paths } });
+  mkdirSync(join(app, 'Contents', 'Resources'), { recursive: true });
+  mkdirSync(bare);
+  writeFileSync(join(app, 'Contents', 'Info.plist'), '<?xml version="1.0"?><plist version="1.0"><dict><key>CFBundleIdentifier</key><string>com.other.app</string><key>CFBundleName</key><string>Evil</string></dict></plist>');
+  writeFileSync(join(app, 'Contents', 'Resources', 'appfiles.json'), document);
+  writeFileSync(join(bare, 'appfiles.json'), document);
+  const cli = fileURLToPath(new URL('./cli.mjs', import.meta.url));
+  const run = spawnSync(process.execPath, [cli, app], { encoding: 'utf8' });
+  assert.doesNotMatch(run.stdout, /Support\/Evil\s.*not tied/);
+  assert.match(run.stdout, /Support\/Google.*not tied/);
+  assert.doesNotMatch(spawnSync(process.execPath, [cli, bare], { encoding: 'utf8' }).stdout, /not tied/);
 });
 
 test('the reference reader rejects bad entries and keeps the valid ones', { skip: !hasPlutil }, () => {

@@ -42,7 +42,7 @@ It reads your source, adds what your framework writes without asking, runs the a
 
 **You make a tool that reads apps.** [Section 9 of the spec](SPEC.md#9-readers) has the rules, starting with this one: the file comes from the app it describes, so it can add candidates and labels but never widen what your tool may touch.
 
-[`reserved.json`](reserved.json) and [`tests/vectors.json`](tests/vectors.json) are plain data, so a reader in Swift, C# or anything else uses the same list and passes the same cases.
+[`reserved.json`](reserved.json), [`tests/vectors.json`](tests/vectors.json) and [`tests/selection.json`](tests/selection.json) are plain data, so a reader in Swift, C# or anything else uses the same list and passes the same cases.
 
 **You want to check a file or see an app.** No clone and no dependencies, Node 18 or later:
 
@@ -95,7 +95,7 @@ Seven kinds, ordered from what must never be lost to what rebuilds itself. When 
 ## Design
 
 - **It only describes**: no scripts and no commands, so reading a file can never run anything
-- **Untrusted by design**: a bad file could name another app's folder or call a database a cache, so readers check its identity against the package and keep their own protections, and [a shared list](reserved.json) refuses the obvious keys, mail and system files
+- **Untrusted by design**: a bad file could name another app's folder or call a database a cache, so readers check its identity against the package, only select by default what they can tie to the app, and keep their own protections, and [a shared list](reserved.json) refuses the obvious keys, mail and system files
 - **One fixed location**: `Contents/Resources/appfiles.json` on the Mac, beside the exe on Windows, so a tool checks one path and needs no index
 - **One file, every platform**: an app that ships on three systems keeps one source
 - **Written by agents, checked by running**: frameworks write files the source never mentions, so the steps end with running the app and comparing

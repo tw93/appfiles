@@ -4,6 +4,10 @@ Changes to the format while it is a draft at `spec: 0`. Nothing here raises `spe
 
 ## 2026-11-09
 
+- A reader no longer selects a path by default only because the file lists it. It needs the first folder of the path to be the package's own name or to start with the section's `id`, or its own knowledge, so a file calling `~/Library/Application Support/Google/Chrome` a cache is shown but not ticked. A blind test found a reader built from section 9 ticking exactly that. Cases are in [`tests/selection.json`](tests/selection.json).
+- `/Library/Developer`, `~/Library/Autosave Information`, `~/Library/Services` and `/etc/default` are shared roots.
+- Section 9 now says what a claim covers, that a reader removes a link and never its target, that a target on another volume does not fail the prefix rule, and that a reader which cannot tell whether an app named in `shared_with` is installed keeps the path.
+- A file may add folders older releases used. On Linux a package type with its own ID ships its own file. The steps cover `MyDocuments`, an app that is its own login item, a `run-value` name the framework picks, an Inno `AppId` with no braces, App Groups outside the sandbox, portable mode, and values added to shared registry keys. These came from three more blind tests.
 - Registry keys other software shares are refused: file types and URL schemes such as `.com`, `.lnk`, `.txt` and `http` with everything under them, and containers such as `Directory\shell` and `CLSID`, where the key an app adds inside stays allowed. The names were checked against a real Windows 11 machine, which holds hundreds of `.ext` keys under `HKCU\Software\Classes`.
 - Paths now compare in NFC and, on macOS and Windows, with Unicode case folding, so `~/library/caches`, `~/.SSH/id_rsa` and `~/.ſsh` are refused. Aliases count too: `%USERPROFILE%\AppData\Roaming` is `%APPDATA%`, and on Linux `~/.config` is `$XDG_CONFIG_HOME`.
 - A wildcard can no longer reach a reserved location or a folder holding one, such as `~/.ss*` or `~/.con*`.

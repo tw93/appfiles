@@ -1,0 +1,572 @@
+[
+  {
+    "name": "the id itself",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.example.notes",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "the id with a suffix",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Preferences/com.example.notes.plist",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "the id then more words",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Preferences/ByHost/com.example.notes.ShipIt.*",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "the name in a shared folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Example Notes",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "the name with other separators and a dot",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/.example-notes",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "case does not matter",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Logs/EXAMPLE NOTES",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "a folder under the name",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Example Notes/Cache",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "the name then more words",
+    "section": "9",
+    "platform": "windows",
+    "path": "%LOCALAPPDATA%\\Programs\\Pake Apps",
+    "id": "Tw93.Pake",
+    "package_name": "Pake",
+    "tied": false
+  },
+  {
+    "name": "a file named after the app in another tool's folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/.config/fish/conf.d/kaku.fish",
+    "id": "fun.tw93.kaku",
+    "package_name": "Kaku",
+    "tied": false
+  },
+  {
+    "name": "a Windows path",
+    "section": "9",
+    "platform": "windows",
+    "path": "%APPDATA%\\Example Notes",
+    "id": "ExampleNotes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "a Linux path",
+    "section": "9",
+    "platform": "linux",
+    "path": "$XDG_CONFIG_HOME/example-notes",
+    "id": "com.example.Notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "another app's folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Google/Chrome",
+    "id": "com.evil.app",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "another password manager's folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/1Password",
+    "id": "com.evil.app",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "another app's folder on Windows",
+    "section": "9",
+    "platform": "windows",
+    "path": "%LOCALAPPDATA%\\Google\\Chrome",
+    "id": "Evil",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a word inside a longer word",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/China",
+    "id": "com.tw93.hina",
+    "package_name": "Hina",
+    "tied": false
+  },
+  {
+    "name": "only the first word of the name",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Example",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": false
+  },
+  {
+    "name": "only part of the id",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.example",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": false
+  },
+  {
+    "name": "a package named after a shared root",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/Other",
+    "id": "com.evil.app",
+    "package_name": "Library",
+    "tied": false
+  },
+  {
+    "name": "a package named after the deeper shared root",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Other",
+    "id": "com.evil.app",
+    "package_name": "Application Support",
+    "tied": false
+  },
+  {
+    "name": "the prefix does not count",
+    "section": "9",
+    "platform": "linux",
+    "path": "$XDG_CONFIG_HOME/other",
+    "id": "com.evil.app",
+    "package_name": "config",
+    "tied": false
+  },
+  {
+    "name": "no name and an unrelated id",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/Other",
+    "id": "com.evil.app",
+    "package_name": "",
+    "tied": false
+  },
+  {
+    "name": "the name across two folders",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Example/Notes",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "a short name as a whole folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Zed",
+    "id": "dev.zed.Zed",
+    "package_name": "Zed",
+    "tied": true
+  },
+  {
+    "name": "a name that is not Latin",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/妙言",
+    "id": "com.tw93.miaoyan",
+    "package_name": "妙言",
+    "tied": true
+  },
+  {
+    "name": "a whole id before a wildcard",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Preferences/ByHost/com.example.notes.*",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": true
+  },
+  {
+    "name": "a name in the middle of a folder name",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/my-example-notes",
+    "id": "com.other.app",
+    "package_name": "Example Notes",
+    "tied": false
+  },
+  {
+    "name": "a wildcard before the name",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/*Password",
+    "id": "com.evil.app",
+    "package_name": "Password",
+    "tied": false
+  },
+  {
+    "name": "a wildcard inside the id",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.*.Chrome",
+    "id": "com.Chrome",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a short id at the start of another app's id",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.google.Chrome",
+    "id": "com",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a package named after a system prefix",
+    "section": "9",
+    "platform": "macos",
+    "path": "/Library/Foo",
+    "id": "com.evil.app",
+    "package_name": "Library",
+    "tied": false
+  },
+  {
+    "name": "a Linux package named after a system prefix",
+    "section": "9",
+    "platform": "linux",
+    "path": "/var/lib/foo",
+    "id": "com.evil.app",
+    "package_name": "lib",
+    "tied": false
+  },
+  {
+    "name": "a list is not a matched id",
+    "section": "9",
+    "platform": "windows",
+    "path": "%LOCALAPPDATA%\\Google\\Chrome",
+    "id": [
+      "RealKey",
+      "Google"
+    ],
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a punctuation-only name",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/Other",
+    "id": "...",
+    "package_name": "---",
+    "tied": false
+  },
+  {
+    "name": "marks stay inside a word",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/कोड",
+    "id": "com.evil.app",
+    "package_name": "कि",
+    "tied": false
+  },
+  {
+    "name": "a short id before a wildcard",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.*",
+    "id": "com",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a short name that is only the start of a folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Zed Editor",
+    "id": "dev.other.app",
+    "package_name": "Zed",
+    "tied": false
+  },
+  {
+    "name": "a whole word before a wildcard under a longer name",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/example.notes.*",
+    "id": "com.other.app",
+    "package_name": "Example Notes",
+    "tied": false
+  },
+  {
+    "name": "a mark does not end a long word",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/कमलकोड",
+    "id": "com.other.app",
+    "package_name": "कमलकि",
+    "tied": false
+  },
+  {
+    "name": "a partial word before a wildcard",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Goog*",
+    "id": "com.evil.app",
+    "package_name": "Goog",
+    "tied": false
+  },
+  {
+    "name": "a word after a wildcard",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/x*password extra",
+    "id": "com.evil.app",
+    "package_name": "x password",
+    "tied": false
+  },
+  {
+    "name": "a generic name deep in another app's folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Google/Chrome/Default",
+    "id": "com.evil.app",
+    "package_name": "Default",
+    "tied": false
+  },
+  {
+    "name": "a generic name under another app's container",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Containers/com.tencent.xinWeChat/Data",
+    "id": "com.evil.app",
+    "package_name": "Data",
+    "tied": false
+  },
+  {
+    "name": "a generic name on Windows",
+    "section": "9",
+    "platform": "windows",
+    "path": "%LOCALAPPDATA%\\Google\\Chrome\\User Data",
+    "id": "EvilKey",
+    "package_name": "User Data",
+    "tied": false
+  },
+  {
+    "name": "a vendor id",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.google.Chrome",
+    "id": "com.google",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a vendor id on Apple's own cache",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.apple.Safari",
+    "id": "com.apple",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a two-word dotted id as the whole folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.example",
+    "id": "com.example",
+    "package_name": "Evil",
+    "tied": true
+  },
+  {
+    "name": "a short name after a dot",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/.zed",
+    "id": "dev.other.app",
+    "package_name": "zed",
+    "tied": true
+  },
+  {
+    "name": "a name is not the start of a longer folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/r2d2 extra",
+    "id": "dev.other.app",
+    "package_name": "r2d2",
+    "tied": false
+  },
+  {
+    "name": "a short name in letters outside the basic plane",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/𝐀𝐁 extra",
+    "id": "dev.other.app",
+    "package_name": "𝐀𝐁",
+    "tied": false
+  },
+  {
+    "name": "a path outside the allowed starts",
+    "section": "9",
+    "platform": "macos",
+    "path": "/opt/Example Notes",
+    "id": "com.example.notes",
+    "package_name": "Example Notes",
+    "tied": false
+  },
+  {
+    "name": "a group container",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Group Containers/group.com.example.notes",
+    "id": "com.example.notes",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a team-prefixed folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Group Containers/ABCDE12345.com.example.notes",
+    "id": "com.example.notes",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a Linux id with its desktop suffix",
+    "section": "9",
+    "platform": "linux",
+    "path": "~/.var/app/com.example.Notes",
+    "id": "com.example.Notes.desktop",
+    "package_name": "Evil",
+    "tied": true
+  },
+  {
+    "name": "a name longer than 255 characters",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "id": "com.other.app",
+    "package_name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "tied": false
+  },
+  {
+    "name": "a short name with a wildcard in a folder below it",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/.zed/cache*",
+    "id": "dev.other.app",
+    "package_name": "zed",
+    "tied": true
+  },
+  {
+    "name": "another app whose first word is the name",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Application Support/Little Snitch",
+    "id": "com.other.app",
+    "package_name": "Little",
+    "tied": false
+  },
+  {
+    "name": "a dashed vendor id",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.google.Chrome",
+    "id": "com-google",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "a vendor spelled as a name",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.apple.Safari",
+    "id": "com.evil.app",
+    "package_name": "com.apple",
+    "tied": false
+  },
+  {
+    "name": "a generic name on a shared developer folder",
+    "section": "9",
+    "platform": "macos",
+    "path": "/Library/Developer/CommandLineTools",
+    "id": "com.evil.app",
+    "package_name": "Developer",
+    "tied": false
+  },
+  {
+    "name": "a generic name on shared services",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Services/Foo.workflow",
+    "id": "com.evil.app",
+    "package_name": "Services",
+    "tied": false
+  },
+  {
+    "name": "a generic name on a Linux shared folder",
+    "section": "9",
+    "platform": "linux",
+    "path": "/etc/default/grub",
+    "id": "com.evil.app",
+    "package_name": "Default",
+    "tied": false
+  },
+  {
+    "name": "an id cut by a wildcard",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/Library/Caches/com.example.notes*",
+    "id": "com.example.notes",
+    "package_name": "Evil",
+    "tied": false
+  },
+  {
+    "name": "an empty name on a folder of punctuation",
+    "section": "9",
+    "platform": "macos",
+    "path": "~/-/Other",
+    "id": "...",
+    "package_name": "---",
+    "tied": false
+  }
+]

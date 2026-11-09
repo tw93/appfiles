@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, readFileSync, realpathSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
-import { MAX_FILE_BYTES, canonical, printable, validate } from './validate.mjs';
+import { MAX_FILE_BYTES, canonical, printable, tiedToApp, validate } from './validate.mjs';
 
 const SUPPORTED_SPEC = 0;
 const PLUTIL = '/usr/bin/plutil';
@@ -43,6 +43,12 @@ function bundleIdentifier(app) {
   if (readRegularFile(plist).text === undefined || !existsSync(PLUTIL)) return null;
   const run = spawnSync(PLUTIL, ['-extract', 'CFBundleIdentifier', 'raw', '-o', '-', plist], { encoding: 'utf8', timeout: 5000 });
   return run.status === 0 ? run.stdout.trim() : null;
+}
+
+function bundleName(app) {
+  const plist = join(app, 'Contents', 'Info.plist');
+  const run = spawnSync(PLUTIL, ['-extract', 'CFBundleName', 'raw', '-o', '-', plist], { encoding: 'utf8', timeout: 5000 });
+  return run.status === 0 ? run.stdout.trim() : '';
 }
 
 function linksElsewhere(path) {
@@ -149,7 +155,9 @@ export function runInspect(given) {
   }
 
   let rejected = named.length - present.length;
-  const show = (left, middle, right = '') => console.log(`  ${left.padEnd(10)} ${printable(middle)}${right ? `  (${printable(right)})` : ''}`);
+  // A folder has no package to ask, and the file cannot vouch for itself, so there is nothing to judge.
+  const packageName = looksLikeApp ? bundleName(target) : undefined;
+  const show = (left, middle, right = '', note = '') => console.log(`  ${left.padEnd(10)} ${printable(middle)}${right ? `  (${printable(right)})` : ''}${note ? `  ${note}` : ''}`);
   const reject = (what, why) => {
     rejected += 1;
     show('rejected', what, why);
@@ -181,7 +189,8 @@ export function runInspect(given) {
       }
       seen.add(key);
       const shared = entry.shared_with ? `shared with ${entry.shared_with.join(', ')}` : '';
-      show(entry.kind, entry.path, [presence(platform, entry.path), shared].filter(Boolean).join(', '));
+      const tied = !looksLikeApp || platform !== 'macos' || tiedToApp(platform, entry.path, section.id, packageName);
+      show(entry.kind, entry.path, [presence(platform, entry.path), shared].filter(Boolean).join(', '), tied ? '' : 'not tied to the app, leave unselected');
     }
     for (const entry of Array.isArray(section.registrations) ? section.registrations : []) {
       const errors = entryErrors(platform, 'registrations', entry);

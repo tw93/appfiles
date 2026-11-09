@@ -22,7 +22,7 @@ The file describes. It has no scripts and no commands, and it never will.
 It does not try to:
 
 - Prove that a path belongs to the app. It is the app's own claim, see section 10.
-- Cover older versions. It declares what the current version uses, so leftovers from older releases still need a tool's own knowledge.
+- Cover older versions. It declares what the current version uses and MAY add folders older releases used that users may still have, so other leftovers still need a tool's own knowledge.
 - Install, remove or migrate anything. What a tool does with the file is up to the tool, within section 9.
 - Replace an uninstaller. It lists what an uninstaller might remove, and tools decide.
 
@@ -34,7 +34,7 @@ Sections 2 to 9 and [`reserved.json`](reserved.json) are normative. Section 1, s
 
 A conforming file follows sections 3 to 8. A conforming reader follows section 9. Where a tool and this text disagree, this text is right and the tool has a bug.
 
-Three things help check that, and none of them replaces the text. The schema checks the document's shape. [`validate.mjs`](validate.mjs) is one implementation of the rules a program can check, which excludes most of section 8. [`tests/vectors.json`](tests/vectors.json) lists documents with the verdict every implementation must reach, in any language.
+A few things help check that, and none of them replaces the text. The schema checks the document's shape. [`validate.mjs`](validate.mjs) is one implementation of the rules a program can check, which excludes most of section 8. [`tests/vectors.json`](tests/vectors.json) lists documents with the verdict every implementation must reach, in any language, and [`tests/selection.json`](tests/selection.json) does the same for section 9's default selection.
 
 ## 3. Location
 
@@ -48,6 +48,7 @@ The file MUST be UTF-8 JSON of at most 1 MiB, named as below. The location is fi
 | Linux deb, rpm | `/usr/share/appfiles/<id>.json` |
 | Linux AppImage | `usr/share/appfiles/<id>.json` inside the AppDir |
 | Linux Flatpak | `/app/share/appfiles/<id>.json` |
+| Linux Snap | `usr/share/appfiles/<id>.json` inside the snap |
 
 An app SHOULD keep one file for all its platforms and include only the platforms it ships on. A channel build with its own identifier, such as a beta, ships its own file with its own values. Builds that share an identifier but lay out files differently, such as a direct download and a sandboxed App Store build, share one file that lists both layouts.
 
@@ -90,7 +91,7 @@ A platform section:
 |---|---|
 | macOS | The bundle identifier of the released build. An app with no bundle uses its launchd label, or else its name |
 | Windows | The key name under `...\CurrentVersion\Uninstall`, or a list of them when builds differ. An app with no stable key uses its `DisplayName` without a version |
-| Linux | The desktop file ID, or the Flatpak app ID. This section of the format is a draft |
+| Linux | The desktop file ID, or the Flatpak app ID. A package type with its own ID ships its own file with that `id`. This section of the format is a draft |
 
 A path entry:
 
@@ -159,12 +160,12 @@ A registration is something the app registers that is not a file, listed even wh
 | Platform | `type` | `id` |
 |---|---|---|
 | macOS | `launchd` | Job label |
-| macOS | `login-item` | Bundle ID of the login item, or its name |
+| macOS | `login-item` | Bundle ID of the login item, or its name. An app that registers itself, through `SMAppService.mainApp`, uses its own bundle ID |
 | macOS | `pkg` | Package receipt ID from `pkgutil --pkgs` |
 | macOS | `system-extension` | Extension bundle ID |
 | macOS | `kext` | Kernel extension bundle ID |
 | Windows | `registry` | Full key, starting with `HKCU\` or `HKLM\`. URL protocols, file associations and shell extensions are registry keys too. `HKCR\x` is a merged view: write `HKCU\Software\Classes\x` or `HKLM\SOFTWARE\Classes\x`, whichever the install scope writes. `QSettings` on Windows writes `HKCU\Software\<org>\<app>`. A key shared across software, such as `HKCU\Software\Microsoft`, is not allowed |
-| Windows | `run-value` | Value name under `...\CurrentVersion\Run` |
+| Windows | `run-value` | Value name under `...\CurrentVersion\Run`, including one the framework picks: Electron's `setLoginItemSettings` defaults to the AppUserModelId |
 | Windows | `service` | Service name |
 | Windows | `scheduled-task` | Task path |
 | Windows | `firewall-rule` | Rule name. An app that listens on a network port also gets a rule when the user accepts the Windows prompt, named after the exe's file description |
@@ -175,7 +176,7 @@ A registration is something the app registers that is not a file, listed even wh
 
 A registration MUST NOT name something the operating system owns. [`reserved.json`](reserved.json) lists them per type, such as any `com.apple.` label on macOS, the `WinDefend` service on Windows and the `sshd.service` unit on Linux. This list is a floor too.
 
-A `registry` `id` MUST NOT name a key other software shares, even when the app writes to it, or a key that holds one. A file type or URL scheme many apps can open, such as `.txt`, `.exe` or `http`, belongs to none of them, along with everything under it, so the app lists its own ProgID, such as `HKCU\Software\Classes\ExampleNotes.md`. A container such as `Directory\shell` or `CLSID` is shared while the key the app adds inside it is its own: `HKCU\Software\Classes\Directory\shell\ExampleNotes` is allowed.
+A `registry` `id` MUST NOT name a key other software shares, even when the app writes to it, or a key that holds one. A file type or URL scheme many apps can open, such as `.txt`, `.exe` or `http`, belongs to none of them, along with everything under it, so the app lists its own ProgID, such as `HKCU\Software\Classes\ExampleNotes.md`. A container such as `Directory\shell` or `CLSID` is shared while the key the app adds inside it is its own: `HKCU\Software\Classes\Directory\shell\ExampleNotes` is allowed. A registration names a key, so a value the app adds to a shared key, such as one under `RegisteredApplications`, stays out of the file.
 
 An `id` MUST NOT have surrounding space. A `launchd` `id` is a bare label, with no `gui/501/` domain, a `systemd-unit` `id` is a bare unit name, and a `path-entry` `id` has no `..`. These rules also apply to what an `id` means, and IDs are compared with Unicode case folding. `sshd` and `sshd@.service` are `sshd.service`, `org.cups.cupsd.plist` is `org.cups.cupsd`, `sudo:amd64` is `sudo`, `Microsoft\Windows\Defrag` is `\Microsoft\Windows\Defrag`, and `C:/Windows` and `%SystemDrive%\Windows` are `C:\Windows`. In a registry key, `WOW6432Node` is ignored, `ControlSet001` is `CurrentControlSet`, and an empty component is not allowed. `HKLM\SAM`, `HKLM\SECURITY`, `...\Control`, `Winlogon`, `Software\Policies` and the executable file classes are refused with everything under them. `...\Services\<name>` is allowed for the app's own service.
 
@@ -201,18 +202,21 @@ A file comes from the app it describes, so it is untrusted input. A reader:
 - MUST treat the file as adding candidates and labels. It MUST NOT let the file override its own protections or widen what it may touch.
 - MUST compare the section's `id` with the identity of the package it came from, and ignore the file on a mismatch. On Windows, any listed value may match the uninstall key name, the `DisplayName` or the Package Family Name.
 - MUST reject any entry that breaks section 6, or a registration that section 7 reserves, and keep the valid ones.
-- MUST, before acting on a path, check what it resolves to as well as how it is spelled: resolve links at every level and apply section 6 to the target, and apply section 6 to each path a wildcard expands to. An app could make `~/.example` a link to `~/.ssh`, and `c*.mail` matches `com.apple.mail`. A `component` link in a shared bin folder is judged by the rule below instead, since it points into the package by design.
+- MUST, before acting on a path, check what it resolves to as well as how it is spelled: resolve links at every level and apply section 6 to the target, and apply section 6 to each path a wildcard expands to. An app could make `~/.example` a link to `~/.ssh`, and `c*.mail` matches `com.apple.mail`. A `component` link in a shared bin folder is judged by the rule below instead, since it points into the package by design. The prefix rule judges how a path is spelled, so a target on another volume does not fail it, while the reserved locations apply wherever a link points. A reader removes the link itself, never its target.
 - MUST read the file only if it is a regular file within section 3's size limit, reached without following a link, and MUST NOT act on a file whose package identity it cannot read. A package can put a FIFO or a link out of the package at that path.
 - SHOULD escape control characters when it shows text from the file.
 - MUST NOT let a kind alone lower the review a path would otherwise get. `cache` is the app's claim, and a file can call someone's data a cache.
 - MUST confirm that a registration belongs to the app before changing it, for example that a launchd job's program is inside the package.
 - MUST NOT delete a `user` entry by default, and MUST show `data` before deleting it.
-- MUST keep a path while any app in `shared_with` is installed, and keep it when any other installed app claims it.
+- MUST NOT select a path by default only because the file lists it. It MAY select a path that is tied to the app, or that its own knowledge confirms is the app's, and shows every other path unselected. A `user` entry and a kept path are never selected.
+- MUST keep a path while any app in `shared_with` is installed, and keep it when any other installed app claims it. A claim covers a path and everything under it, so a reader removing a folder leaves what another app claims inside it, and never removes what sits inside another app's claim. How a reader finds installed apps is its own choice, and when it cannot tell whether an app named in `shared_with` is installed, it keeps the path.
 - MUST read the file before running a vendor uninstaller, which may remove it.
 - MUST ignore unknown fields, and MUST ignore the whole file if `spec` is higher than it understands.
 - MUST NOT treat a missing path as an error.
 - MUST remove a `component` in a shared bin folder only when it links into the app's own package.
 - MUST, on Windows, resolve `%USERPROFILE%\Documents` and the other personal folders through the known folder API, since they are often redirected.
+
+A path is tied to the app by what starts it, after its prefix and the longest shared root it sits under. Words are runs of letters, marks and digits, compared with case folding. The package's own name must be the whole of that first folder apart from punctuation, or of it and the folders below it, so `Example Notes` ties `.example-notes` and `Example/Notes`, `zed` ties `.zed`, and `Little` does not tie `Little Snitch`. The `id` value that matched the package follows the same rule, and one of three or more words may also run on, so `com.example.notes` ties `com.example.notes.plist`, while `com.google` does not tie `com.google.Chrome`. A name or `id` longer than 255 characters ties nothing. Deeper folders do not count, so `Default` does not tie `Google/Chrome/Default`, and a file named after the app in another tool's folder, such as `~/.config/fish/conf.d/example.fish`, stays unselected unless the reader's own knowledge confirms it. The same goes for `group.com.example.notes` and a team-prefixed folder, which a reader can confirm from the app's entitlements. A folder with a wildcard in it is not whole, and before a wildcard only whole words count, so `com.*` and `Goog*` tie nothing, and both the spelling and each path it expands to must tie. A reader judges the path after resolving links as well, written back in this form, so a folder that links elsewhere does not tie what it reaches, and a target outside the allowed starts is not tied. The name comes from the package, `CFBundleName` on macOS, `DisplayName` without a version on Windows and `Name` in the desktop file on Linux, never from the file's `name`, which could say `Google`, and a Linux `id` is compared without `.desktop`. [`tests/selection.json`](tests/selection.json) has the cases. A package can lie about its name, so being tied is a default, not proof.
 
 ## 10. Security considerations
 
@@ -220,7 +224,7 @@ The file is written by the party it describes, and a reader runs with the user's
 
 | What a bad file could do | What stands in the way |
 |---|---|
-| Claim another app's folder | Section 9: keep a path any other installed app claims, and the reader's own protections |
+| Claim another app's folder | Section 9: a path not tied to the app is not selected by default, a path any other installed app claims is kept, and the reader's own protections still apply |
 | Name keys, mail or system files | Section 6 and `reserved.json`, then the reader's own protections, since the list is a floor |
 | Call a database a cache | Section 9: a kind alone never lowers the review |
 | Point at a system service | Sections 7 and 9: reserved names, and confirming the registration belongs to the app |

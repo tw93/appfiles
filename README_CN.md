@@ -42,7 +42,7 @@ Read https://raw.githubusercontent.com/tw93/appfiles/main/appfiles.md and add ap
 
 **你在做读取 App 的工具**，规则在[规范第 9 节](SPEC.md#9-readers)，第一条就是这个文件来自它描述的 App 本身，可以增加候选和标签，但永远不能扩大你的工具能动的范围。
 
-[`reserved.json`](reserved.json) 和 [`tests/vectors.json`](tests/vectors.json) 都是纯数据，不管用 Swift、C# 还是别的语言写读取方，用的都是同一份名单，跑的也是同样的用例。
+[`reserved.json`](reserved.json)、[`tests/vectors.json`](tests/vectors.json) 和 [`tests/selection.json`](tests/selection.json) 都是纯数据，不管用 Swift、C# 还是别的语言写读取方，用的都是同一份名单，跑的也是同样的用例。
 
 **你想校验一份文件或者看看一个 App**，不用克隆仓库也没有依赖，Node 18 以上就行：
 
@@ -95,7 +95,7 @@ npx github:tw93/appfiles /Applications/Example.app
 ## 为什么这样设计
 
 - **只描述不执行**：没有脚本也没有命令，读这个文件不会运行任何东西
-- **默认不信任**：一份坏文件可能写上别的 App 的目录，或者把数据库标成缓存，所以读取方要拿它和安装包的身份核对，自己的保护规则照旧，[一份共用名单](reserved.json)再拒掉常见的密钥、邮件和系统文件
+- **默认不信任**：一份坏文件可能写上别的 App 的目录，或者把数据库标成缓存，所以读取方要拿它和安装包的身份核对，只默认勾选能和 App 对上的路径，自己的保护规则照旧，[一份共用名单](reserved.json)再拒掉常见的密钥、邮件和系统文件
 - **位置固定**：Mac 上是 `Contents/Resources/appfiles.json`，Windows 上在 exe 旁边，工具只查一个路径，不需要索引
 - **一份文件管所有平台**：一个 App 发三个系统，也只维护一份
 - **Agent 来写，跑起来验证**：框架会写很多源码里看不到的文件，所以步骤最后一定要把 App 跑一遍对照
