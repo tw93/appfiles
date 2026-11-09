@@ -336,13 +336,19 @@ function checkRegistration(platform, rules, entry, where, errors) {
       errors.push(`${label} has an empty component`);
       return;
     }
+    if (match[2].split('\\').some((part) => part === '.' || part === '..')) {
+      errors.push(`${label} must not contain . or ..`);
+      return;
+    }
     const key = fold(match[2])
       .replace(/\\+$/, '')
+      .replace(/^wow6432node\\/, '')
       .replace(/\\wow6432node(?=\\|$)/g, '')
       .replace(/^system\\controlset\d+(?=\\|$)/, 'system\\currentcontrolset');
     const isKey = (list) => list.some((shared) => fold(shared) === key);
     const under = (list) => list.some((root) => key === fold(root) || key.startsWith(`${fold(root)}\\`));
-    if (isKey(reserved.registry_keys) || under(reserved.registry_subtrees)) {
+    const holds = (list) => list.some((shared) => fold(shared).startsWith(`${key}\\`));
+    if (isKey(reserved.registry_keys) || under(reserved.registry_subtrees) || holds(reserved.registry_keys) || holds(reserved.registry_subtrees)) {
       errors.push(`${label} names a shared registry key`);
       return;
     }

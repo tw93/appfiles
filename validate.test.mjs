@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -226,6 +226,7 @@ test('ignores unknown fields', () => {
 });
 
 const repoFile = (name) => readFileSync(new URL(`./${name}`, import.meta.url), 'utf8');
+const EXAMPLES = readdirSync(new URL('./examples/', import.meta.url), { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name);
 
 test('the examples in the spec and both READMEs are valid', () => {
   for (const name of ['SPEC.md', 'README.md', 'README_CN.md']) {
@@ -261,6 +262,57 @@ test('the kinds and registration types in the spec match the schema and the vali
   }
 });
 
+test('the schema accepts every valid document and refuses the wrong shapes', async (t) => {
+  let Ajv;
+  try {
+    ({ default: Ajv } = await import('ajv/dist/2020.js'));
+  } catch (error) {
+    if (process.env.CI) throw error;
+    t.skip('ajv is not installed, see CONTRIBUTING.md');
+    return;
+  }
+  const check = new Ajv({ strict: false }).compile(JSON.parse(repoFile('appfiles.schema.json')));
+  const vectors = JSON.parse(repoFile('tests/vectors.json'));
+  // A valid file must never turn red in an editor. The schema only checks the shape, so most
+  // refusals stay with the validator, and these are the ones it must catch by itself.
+  for (const { name, valid, document } of vectors.filter((vector) => vector.valid)) {
+    assert.ok(check(document), `${name} ${JSON.stringify(check.errors)}`);
+  }
+  for (const example of EXAMPLES) {
+    assert.ok(check(JSON.parse(repoFile(`examples/${example}/appfiles.json`))), `${example} ${JSON.stringify(check.errors)}`);
+  }
+  const shapes = ['spec is too high', 'no name', 'no platform', 'an unknown kind', 'a type from another platform'];
+  for (const name of shapes) {
+    const vector = vectors.find((candidate) => candidate.name === name);
+    assert.equal(vector.valid, false, name);
+    assert.equal(check(vector.document), false, name);
+  }
+});
+
+test('every reserved registry key is refused, and what an app adds inside a container is not', () => {
+  const { registry_keys: keys, registry_subtrees: subtrees } = JSON.parse(repoFile('reserved.json')).windows;
+  const registry = (id) => ({ spec: 0, name: 'T', windows: { id: 'x', paths: [], registrations: [{ type: 'registry', id }] } });
+  const key = (name) => `HKCU\\${name}`;
+  for (const name of [...keys, ...subtrees]) assert.equal(isValid(registry(key(name))), false, name);
+  for (const name of subtrees) assert.equal(isValid(registry(key(`${name}\\Example`))), false, `${name} child`);
+  // A child of a container stays open unless the list reserves that child, or something inside it.
+  const inside = new Set([...keys, ...subtrees].map((name) => name.toLowerCase()));
+  for (const name of keys.filter((candidate) => !subtrees.some((root) => candidate === root || candidate.startsWith(`${root}\\`)))) {
+    const child = `${name}\\ExampleNotes`;
+    if (inside.has(child.toLowerCase())) continue;
+    assert.ok(isValid(registry(key(child))), child);
+  }
+});
+
+test('the examples folder holds valid files, each linked from its README', () => {
+  assert.ok(EXAMPLES.length >= 3);
+  const readme = repoFile('examples/README.md');
+  for (const example of EXAMPLES) {
+    assert.deepEqual(validate(JSON.parse(repoFile(`examples/${example}/appfiles.json`))), { errors: [], warnings: [] }, example);
+    assert.ok(readme.includes(`(${example}/appfiles.json)`), example);
+  }
+});
+
 test('the command line checks the file when run through a symlink, as npx does', () => {
   const folder = mkdtempSync(join(tmpdir(), 'appfiles-'));
   const link = join(folder, 'appfiles');
@@ -281,7 +333,7 @@ test('the command line checks the file when run through a symlink, as npx does',
 });
 
 test('relative links in the docs point at files in the repository', () => {
-  for (const name of ['README.md', 'README_CN.md', 'SPEC.md', 'CHANGELOG.md', 'appfiles.md']) {
+  for (const name of ['README.md', 'README_CN.md', 'SPEC.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'appfiles.md']) {
     for (const [, target] of repoFile(name).matchAll(/\]\((?!https?:|#)([^)#]+)[^)]*\)/g)) {
       assert.ok(existsSync(new URL(`./${target}`, import.meta.url)), `${name} links to ${target}`);
     }
@@ -460,7 +512,8 @@ test('the reference reader judges every section, and this machine first', () => 
   assert.equal(run.status, 1, run.stdout);
   assert.match(run.stdout, /rejected\s+~\/\.ssh/);
   assert.match(run.stdout, /absent/);
-  assert.ok(run.stdout.indexOf('~/.example') < run.stdout.indexOf('%APPDATA%'));
+  const [first, second] = process.platform === 'win32' ? ['%APPDATA%', '~/.example'] : ['~/.example', '%APPDATA%'];
+  assert.ok(run.stdout.indexOf(first) < run.stdout.indexOf(second));
 });
 
 test('the reference reader ignores a file with no name, or a section with no id', () => {
@@ -506,7 +559,7 @@ test('a Mac app with no plutil to ask is ignored', { skip: hasPlutil }, () => {
   assert.match(run.stdout, /cannot read its bundle identifier/);
 });
 
-test('the reference reader says what it does not follow, and a deep path cannot stall it', () => {
+test('the reference reader says what it does not follow, and a deep path cannot stall it', { skip: process.platform === 'win32' }, () => {
   const home = tempDir();
   mkdirSync(join(home, '.real'));
   symlinkSync(join(home, '.real'), join(home, '.link'));

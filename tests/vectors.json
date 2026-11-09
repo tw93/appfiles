@@ -3912,5 +3912,936 @@
         ]
       }
     }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\.com",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\.com"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\comfile",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\comfile"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\.scr",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\.scr"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\.lnk",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\.lnk"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\.txt",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\.txt"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\.txt\\OpenWithProgids",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\.txt\\OpenWithProgids"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\.md",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\.md"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\txtfile",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\txtfile"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\http",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\http"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\https",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\https"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\mailto",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\mailto"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\*",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\*"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\*\\shell",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\*\\shell"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\Directory",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\Directory"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\Directory\\shell",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\Directory\\shell"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\Directory\\Background\\shell",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\Directory\\Background\\shell"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\Folder",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\Folder"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\CLSID",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\CLSID"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\Applications",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\Applications"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Classes\\SystemFileAssociations",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\SystemFileAssociations"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKLM\\SOFTWARE\\Classes\\.COM",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\Classes\\.COM"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKLM\\SOFTWARE\\WOW6432Node\\Classes\\http",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\WOW6432Node\\Classes\\http"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Control Panel\\Desktop",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Control Panel\\Desktop"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKLM\\HARDWARE\\DESCRIPTION",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\HARDWARE\\DESCRIPTION"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Console",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Console"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry shared by many apps: HKCU\\Network",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Network"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Software\\Classes\\Directory\\shell\\ExampleNotes",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\Directory\\shell\\ExampleNotes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Software\\Classes\\*\\shell\\ExampleNotes",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\*\\shell\\ExampleNotes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Software\\Classes\\Directory\\Background\\shell\\ExampleNotes",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\Directory\\Background\\shell\\ExampleNotes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Software\\Classes\\CLSID\\{0F5A2D3E-6C1B-4B7A-9E52-3A1D7C8B4F10}",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\CLSID\\{0F5A2D3E-6C1B-4B7A-9E52-3A1D7C8B4F10}"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Software\\Classes\\Applications\\example-notes.exe",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\Applications\\example-notes.exe"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Software\\Classes\\SystemFileAssociations\\.jpg\\shell\\ExampleNotes",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\SystemFileAssociations\\.jpg\\shell\\ExampleNotes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Software\\Classes\\ExampleNotes.md",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\ExampleNotes.md"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Software\\Classes\\.examplenote",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\.examplenote"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\example-notes.exe",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\example-notes.exe"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers\\ExampleNotes",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers\\ExampleNotes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\Console\\ExampleNotes",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Console\\ExampleNotes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "windows registry an app owns: HKCU\\AppEvents\\Schemes\\Apps\\ExampleNotes",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\AppEvents\\Schemes\\Apps\\ExampleNotes"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a registry key that holds a reserved one",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Microsoft\\Windows\\Shell"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "WOW6432Node first in a registry key",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\WOW6432Node\\SOFTWARE\\Classes\\.exe"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a registry key through ..",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\..\\Classes\\.txt"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a registry key through .",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\.\\Classes\\.txt"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "MSI's shared product list",
+    "section": "7",
+    "valid": false,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\Classes\\Installer\\Products"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "one MSI product",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKLM\\SOFTWARE\\Classes\\Installer\\Products\\0F5A2D3E6C1B4B7A9E523A1D7C8B4F10"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "a Content Type key with a slash in its name",
+    "section": "7",
+    "valid": true,
+    "document": {
+      "spec": 0,
+      "name": "T",
+      "windows": {
+        "id": "x.y",
+        "paths": [],
+        "registrations": [
+          {
+            "type": "registry",
+            "id": "HKCU\\Software\\Classes\\MIME\\Database\\Content Type\\application/x-example"
+          }
+        ]
+      }
+    }
   }
 ]

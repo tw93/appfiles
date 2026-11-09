@@ -4,6 +4,7 @@ Changes to the format while it is a draft at `spec: 0`. Nothing here raises `spe
 
 ## 2026-11-09
 
+- Registry keys other software shares are refused: file types and URL schemes such as `.com`, `.lnk`, `.txt` and `http` with everything under them, and containers such as `Directory\shell` and `CLSID`, where the key an app adds inside stays allowed. The names were checked against a real Windows 11 machine, which holds hundreds of `.ext` keys under `HKCU\Software\Classes`.
 - Paths now compare in NFC and, on macOS and Windows, with Unicode case folding, so `~/library/caches`, `~/.SSH/id_rsa` and `~/.ſsh` are refused. Aliases count too: `%USERPROFILE%\AppData\Roaming` is `%APPDATA%`, and on Linux `~/.config` is `$XDG_CONFIG_HOME`.
 - A wildcard can no longer reach a reserved location or a folder holding one, such as `~/.ss*` or `~/.con*`.
 - Text values refuse control and bidirectional formatting characters, the file is limited to 1 MiB, and Windows paths refuse the spellings it reads as another name, such as `.ssh.`, `MICROS~1`, `file::$DATA`, `NUL` and legacy junctions like `Application Data`.

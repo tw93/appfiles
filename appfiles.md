@@ -144,6 +144,8 @@ Add one `registrations` entry for each thing the app registers that is not a fil
 
 The types, and what each `id` holds, are in section 7 of the spec. Search installers for `netsh advfirewall` and `FirewallRule` as well.
 
+A file association on Windows has two parts. List the ProgID the app creates, such as `HKCU\Software\Classes\ExampleNotes.md`, and leave out `.md` itself, since other apps use that key too.
+
 Files that belong with an entry, such as a launchd plist in `~/Library/LaunchAgents`, still go in `paths`, as `component`.
 
 ## Step 6: Run the app and compare

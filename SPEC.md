@@ -175,6 +175,8 @@ A registration is something the app registers that is not a file, listed even wh
 
 A registration MUST NOT name something the operating system owns. [`reserved.json`](reserved.json) lists them per type, such as any `com.apple.` label on macOS, the `WinDefend` service on Windows and the `sshd.service` unit on Linux. This list is a floor too.
 
+A `registry` `id` MUST NOT name a key other software shares, even when the app writes to it, or a key that holds one. A file type or URL scheme many apps can open, such as `.txt`, `.exe` or `http`, belongs to none of them, along with everything under it, so the app lists its own ProgID, such as `HKCU\Software\Classes\ExampleNotes.md`. A container such as `Directory\shell` or `CLSID` is shared while the key the app adds inside it is its own: `HKCU\Software\Classes\Directory\shell\ExampleNotes` is allowed.
+
 An `id` MUST NOT have surrounding space. A `launchd` `id` is a bare label, with no `gui/501/` domain, a `systemd-unit` `id` is a bare unit name, and a `path-entry` `id` has no `..`. These rules also apply to what an `id` means, and IDs are compared with Unicode case folding. `sshd` and `sshd@.service` are `sshd.service`, `org.cups.cupsd.plist` is `org.cups.cupsd`, `sudo:amd64` is `sudo`, `Microsoft\Windows\Defrag` is `\Microsoft\Windows\Defrag`, and `C:/Windows` and `%SystemDrive%\Windows` are `C:\Windows`. In a registry key, `WOW6432Node` is ignored, `ControlSet001` is `CurrentControlSet`, and an empty component is not allowed. `HKLM\SAM`, `HKLM\SECURITY`, `...\Control`, `Winlogon`, `Software\Policies` and the executable file classes are refused with everything under them. `...\Services\<name>` is allowed for the app's own service.
 
 ## 8. What a file does not list
