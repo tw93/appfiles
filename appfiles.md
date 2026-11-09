@@ -20,6 +20,7 @@ Find, for each platform the app ships on:
 | electron-builder NSIS | `nsis.guid`, or the UUID v5 of `appId` in namespace `50e065bc-3134-11e6-9bab-38c9862bdaf3` |
 | Other NSIS | The key name the script writes |
 | Squirrel | The package ID |
+| Velopack | The pack ID, `--packId`. The install folder is `%LOCALAPPDATA%\<pack ID>` |
 | MSI with a fixed product code | The product code |
 | MSI with a new product code per release, or no installer | The `DisplayName` without a version |
 
@@ -80,7 +81,7 @@ Add these three whatever the stack, Electron, Qt, Flutter and Rust included, eve
 
 Add these when the condition holds:
 
-- `~/Library/HTTPStorages/<id>`, kind `cache`. `URLSession` writes it, and Sparkle and Squirrel.Mac auto-update use `URLSession`. Add it unless you can see the app never does.
+- `~/Library/HTTPStorages/<id>` and `~/Library/HTTPStorages/<id>.binarycookies`, kind `cache`. `URLSession` writes them, and Sparkle and Squirrel.Mac auto-update use `URLSession`. Add them unless you can see the app never does.
 - `~/Library/Cookies/<id>.binarycookies`, kind `data`, in the same case when the app has accounts.
 - `~/Library/WebKit/<id>`, kind `data`, when it uses `WKWebView`. Tauri on macOS does. Electron does not.
 
@@ -138,6 +139,9 @@ A single file you name in a shared folder is fine, such as `~/.local/bin/example
 - Temporary folders such as `$TMPDIR` and `%TEMP%`. The OS clears them.
 - A file the app only edits but does not own, such as `~/.zshrc`.
 - Paths beside the app's exe in portable mode. They are inside its own folder.
+- Items in the Keychain, Credential Manager or another secret store. They are not files.
+- A license or trial record the app keeps on purpose so that it survives a reinstall. Tools should not reset it for the user.
+- Apps this app generates, when it is a tool that makes other apps. Each has its own ID and ships its own file.
 
 If another app reads or writes a path too, name that app's ID in `shared_with`, or the tool's plain name when it has no ID. Tools keep the path while any of those apps is installed.
 
@@ -193,7 +197,9 @@ If you cannot run the app, say so in your handoff and list the platforms you did
 
 ## Step 7: Write the file
 
-Name it `appfiles.json`. Keep one file for all platforms and include only the platforms the app ships on. A channel build with its own identifier, such as a beta, ships its own file with its own values.
+Name it `appfiles.json`. Keep one file for all platforms and include only the platforms the app ships on. A repository that builds several packages keeps one copy and each package copies it in.
+
+A channel build with its own identifier, such as a beta, ships its own file with its own values. Builds that share an identifier but lay out files differently, such as a direct download and a sandboxed App Store build, share one file that lists both layouts.
 
 ```json
 {
@@ -246,6 +252,8 @@ Path rules:
 - A path never names a shared root itself, such as `~/Library/Caches` or `%APPDATA%`.
 - `~/Documents`, `~/Desktop`, `~/Downloads`, `~/Movies`, `~/Music` and `~/Pictures` hold `user` entries only.
 
+If something the app writes cannot follow these rules, such as a file in `/etc` on macOS, one under `%ProgramFiles%`, or a registration name with a per-user part, leave it out and say so in your handoff.
+
 The file has no scripts and no commands, and it never will. It describes. It does not instruct.
 
 ## Step 8: Put it in the package
@@ -263,11 +271,12 @@ The location is fixed, so tools check one path and read no other configuration.
 
 How to get it there:
 
-- **Xcode**: add the file to the target's Copy Bundle Resources phase.
+- **Xcode**: add the file to the target's Copy Bundle Resources phase. With XcodeGen, a resources group in `project.yml` does this.
+- **Hand-assembled `.app`**: copy it into `Contents/Resources` before `codesign` runs.
 - **electron-builder**: `mac.extraResources` for macOS and `win.extraFiles` for Windows. `extraResources` on Windows lands in `resources\`, which is the wrong folder.
 - **Electron Forge**: `packagerConfig.extraResource` for macOS. On Windows, add a `postPackage` hook that copies the file beside the exe.
 - **Tauri**: `bundle.resources` in `tauri.conf.json`, then confirm the file's location in the built package.
-- **.NET**: `<Content Include="appfiles.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />`.
+- **.NET**: `<Content Include="appfiles.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />`. Velopack packs the publish folder, so the file lands beside the exe in `current\`.
 - **NSIS, Inno Setup, WiX**: install it beside the exe.
 
 Open the built package and confirm the file is at that exact path. On macOS, do this before signing, since the signature seals `Contents/Resources`.
