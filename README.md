@@ -26,32 +26,32 @@
 
 ## Why
 
-Every backup, migration, cleanup and uninstall tool guesses which files belong to an app, and whether losing them matters. The closest thing to an answer today is Homebrew's `zap` lists, written by hand one app at a time, for the Mac only, and a cache and a chat history look the same in them.
+Every backup, migration, cleanup and uninstall tool guesses which files belong to an app, and whether losing them matters. The closest thing to an answer today is Homebrew's `zap` lists, written by hand one app at a time for the Mac only, where a cache and a chat history look the same.
 
 The people who know the answer are the ones who made the app. `appfiles.json` lets them write it down once, inside the package, for macOS, Windows and Linux, and any tool can read it.
 
 ## Get Started
 
-**You make an app.** Tell your coding agent:
+**If you make an app**, tell your coding agent:
 
 ```text
 Read https://raw.githubusercontent.com/tw93/appfiles/main/appfiles.md and add appfiles.json to this app.
 ```
 
-It reads your source, adds what your framework writes without asking, runs the app to check, and puts the file in your package. Electron, Tauri, Swift, Go, .NET, WinUI, Qt, Flutter and C++ are covered.
+It reads your source, adds the files your framework writes on its own, runs the app to check, and puts the file in your package. Electron, Tauri, Swift, Go, .NET, WinUI, Qt, Flutter and C++ are covered.
 
-**You make a tool that reads apps.** [Section 9 of the spec](SPEC.md#9-readers) has the rules, starting with this one: the file comes from the app it describes, so it can add candidates and labels but never widen what your tool may touch.
+**If you make a tool that reads apps**, [Section 9 of the spec](SPEC.md#9-readers) has the rules, starting with this one: the file comes from the app it describes, so it can add candidates and labels but never widen what your tool may touch.
 
 [`reserved.json`](reserved.json), [`tests/vectors.json`](tests/vectors.json) and [`tests/selection.json`](tests/selection.json) are plain data, so a reader in Swift, C# or anything else uses the same list and passes the same cases.
 
-**You want to check a file or see an app.** No clone and no dependencies, Node 18 or later:
+**If you just want to check a file or look at an app**, there is nothing to clone or install beyond Node 18 or later:
 
 ```bash
 npx github:tw93/appfiles appfiles.json
 npx github:tw93/appfiles /Applications/Example.app
 ```
 
-Give it a file and it validates it. Give it an app and it is the reference reader: it checks the file against the package's identity, rejects bad entries and lists the rest with whether each exists on this machine. Checking that identity takes macOS, since it asks the system's `plutil`. Give it a folder holding the file and it does the same without the identity check. It only reads and acts on nothing, so it does not follow links or expand wildcards, which a tool that deletes things must do first.
+Pass it a file and it validates it. Pass it an app and it runs as the reference reader: it checks the file against the package's identity, rejects bad entries and lists the rest, marking whether each exists on this machine. Checking that identity needs macOS, because it uses the system's `plutil`. Pass it a folder holding the file and it does the same without the identity check. It is read-only, so it does not follow links or expand wildcards. A tool that deletes things has to do both first.
 
 ## The Format
 
@@ -90,21 +90,21 @@ Seven kinds, ordered from what must never be lost to what rebuilds itself. When 
 | `config` | Settings |
 | `state` | Window and session state |
 | `log` | Logs and crash reports |
-| `cache` | Rebuilt by itself |
+| `cache` | Rebuilt automatically |
 
 ## Design
 
 - **It only describes**: no scripts and no commands, so reading a file can never run anything
-- **Untrusted by design**: a bad file could name another app's folder or call a database a cache, so readers check its identity against the package, only select by default what they can tie to the app, and keep their own protections, and [a shared list](reserved.json) refuses the obvious keys, mail and system files
+- **Not trusted by default**: a bad file could name another app's folder or call a database a cache, so readers check its identity against the package, select by default only what they can tie to the app, and keep their own protections. [A shared list](reserved.json) also refuses the obvious keys, mail and system files
 - **One fixed location**: `Contents/Resources/appfiles.json` on the Mac, beside the exe on Windows, so a tool checks one path and needs no index
 - **One file, every platform**: an app that ships on three systems keeps one source
-- **Written by agents, checked by running**: frameworks write files the source never mentions, so the steps end with running the app and comparing
+- **Written by agents, checked by running**: frameworks write files the source never mentions, so the steps end with running the app and comparing what it wrote
 
 ## How It Differs
 
 | Existing | What it does | What it leaves open |
 |---|---|---|
-| [Homebrew `zap`](https://docs.brew.sh/Cask-Cookbook#stanza-zap) | Per-cask lists of paths to remove, written by others | Homebrew only, and no word on what each path is |
+| [Homebrew `zap`](https://docs.brew.sh/Cask-Cookbook#stanza-zap) | Per-cask lists of paths to remove, written by others | Homebrew only, and it doesn't say what each path is |
 | [Mackup](https://github.com/lra/mackup) | Community list of settings files per app, for backup | Settings only, and each tool keeps its own list |
 | [BleachBit CleanerML](https://github.com/bleachbit/bleachbit), [Winapp2](https://github.com/MoscaDotTo/Winapp2) | Community cleaning rules per app | Written for cleaning tools, as what to delete rather than what the app keeps |
 | [Android backup rules](https://developer.android.com/identity/data/autobackup) | The app says what to back up | Android only, and only for backup |
@@ -116,7 +116,7 @@ Seven kinds, ordered from what must never be lost to what rebuilds itself. When 
 
 ## Who Ships It
 
-These apps carry the file in their source, and it reaches users with each app's next release:
+These apps have the file in their source, and it reaches users with each app's next release:
 
 | App | Platforms | File |
 |---|---|---|
@@ -127,25 +127,25 @@ These apps carry the file in their source, and it reaches users with each app's 
 | [Hina](https://hina.day) | macOS | In the app package |
 | [Yado](https://yado.house) | macOS | In the app package |
 
-Added it to yours? Open an issue or PR and it goes in this table. Nothing reads the format yet, and Mole is meant to be the first reader.
+Added it to yours? Open an issue or PR and I'll add it to the table. Nothing reads the format yet, and Mole is meant to be the first reader.
 
 ## Status
 
 `spec: 0` is a draft and the format can still change. How it has been checked so far:
 
-- **Blind tests**: coding agents given only the steps found 61 of 73 known paths in the first round and 52 of 61 on ten new apps in the second, and the steps were fixed after each. The nine misses in the second round look like older versions' leftovers
+- **Blind tests**: coding agents given only the steps found 61 of 73 known paths in the first round and 52 of 61 on ten new apps in the second, and the steps were fixed after each. The nine misses in the second round look like leftovers from older versions
 - **Real runs on macOS**: Kaku, MiaoYan, Mole and Pake were opened on a test Mac and quit without signing in, and all 46 paths they wrote under their own names were covered. That Mac had run these apps before, so it was not a clean profile
-- **Fresh home folder on macOS**: Hina and Yado were opened with `HOME` pointing at an empty folder and quit normally, without signing in, and every folder they wrote there was covered. Preferences and window state did not land in that folder, so this run says nothing about those entries
-- **Windows**: the tests and the reference reader ran on Windows 11. All six of Mole's paths were present on a long-used install, without a clean run
-- **Linux**: Pake's Linux build ran under Xvfb on Debian with an empty home folder, without signing in, and the one file it wrote was covered. It has not been checked on a real desktop, and that section of the format stays a draft
+- **Fresh home folder on macOS**: Hina and Yado were opened with `HOME` pointing at an empty folder and quit normally, without signing in, and every folder they wrote there was covered. Preferences and window state were not written to that folder, so this run does not verify those entries
+- **Windows**: the tests and the reference reader ran on Windows 11. All six of Mole's paths were present on a long-used install, but it has not had a clean run
+- **Linux**: Pake's Linux build ran under Xvfb on Debian with an empty home folder, without signing in, and the one file it wrote was covered. It has not been checked on a real desktop, and that section of the format remains a draft
 
-The path rules were also run against all 21,544 unique paths in Homebrew's `zap` lists, which is how they stopped refusing third-party files inside Apple's recent-documents folder. Of the paths the previous rules accepted, 19 are now refused on purpose: 15 in Apple's own folders and 4 that name a whole shared folder. The gaps these turned up are in the [changelog](CHANGELOG.md). Hit something the format cannot express? Please [open an issue](https://github.com/tw93/appfiles/issues).
+The path rules were also run against all 21,544 unique paths in Homebrew's `zap` lists, which caught them refusing third-party files inside Apple's recent-documents folder. Of the paths the previous rules accepted, 19 are now refused on purpose: 15 in Apple's own folders and 4 that name a whole shared folder. The gaps these runs found are in the [changelog](CHANGELOG.md). Hit something the format cannot express? Please [open an issue](https://github.com/tw93/appfiles/issues).
 
 ## Background
 
 I make [Mole](https://github.com/tw93/Mole), a cleaner for Mac and Windows, and to get its uninstaller right I tested more than 800 apps. Every one of them kept its files differently, so I wanted a format that lets an app say where its files are and what they are.
 
-A developer should not have to learn a format for this, so the steps are written for coding agents, and they only tell their agent to read them. The name took a few rounds, since nobody who makes an app wants the word uninstall inside it.
+A developer should not have to learn a format for this, so the steps are written for coding agents, and all a developer does is tell their agent to read them. The name took a few rounds, since nobody who makes an app wants the word uninstall inside it.
 
 I don't expect this to spread quickly, so I started with my own apps.
 
