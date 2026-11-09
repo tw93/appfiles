@@ -135,8 +135,9 @@ Added it to yours? Open an issue or PR and it goes in this table. Nothing reads 
 
 - **Blind tests**: coding agents given only the steps found 61 of 73 known paths in the first round and 52 of 61 on ten new apps in the second, and the steps were fixed after each. The nine misses in the second round look like older versions' leftovers
 - **Real runs on macOS**: Kaku, MiaoYan, Mole and Pake were opened on a test Mac and quit without signing in, and all 46 paths they wrote under their own names were covered. That Mac had run these apps before, so it was not a clean profile
-- **Windows**: compared with a long-used install, without a clean run
-- **Linux**: not run yet, and that section of the format stays a draft
+- **Fresh home folder on macOS**: Hina and Yado were opened with `HOME` pointing at an empty folder and quit normally, without signing in, and every folder they wrote there was covered. Preferences and window state did not land in that folder, so this run says nothing about those entries
+- **Windows**: the tests and the reference reader ran on Windows 11. All six of Mole's paths were present on a long-used install, without a clean run
+- **Linux**: Pake's Linux build ran under Xvfb on Debian with an empty home folder, without signing in, and the one file it wrote was covered. It has not been checked on a real desktop, and that section of the format stays a draft
 
 The path rules were also run against all 21,544 unique paths in Homebrew's `zap` lists, which is how they stopped refusing third-party files inside Apple's recent-documents folder. Of the paths the previous rules accepted, 17 are now refused on purpose: 15 in Apple's own folders and 2 that name a whole shared plug-in folder. The gaps these turned up are in the [changelog](CHANGELOG.md). Hit something the format cannot express? Please [open an issue](https://github.com/tw93/appfiles/issues).
 
