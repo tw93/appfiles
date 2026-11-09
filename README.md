@@ -124,15 +124,6 @@ Then I saw [auth.md](https://github.com/workos/auth.md), a file written for agen
 
 I don't expect this to spread quickly, so I started with my own apps.
 
-## Support
-
-- If appfiles helped you, give it a star, [share it](https://x.com/intent/tweet?url=https://github.com/tw93/appfiles&text=appfiles%20-%20An%20open%20spec%20for%20the%20files%20an%20app%20leaves%20on%20your%20machine.), or open an issue or PR
-- I have two cats, TangYuan and Coke, and if appfiles has been helpful to you, you can feed them <a href="https://cats.tw93.fun?name=appfiles" target="_blank">canned food 🥩</a>
-
-These lovely people already did 🐱
-
-<a href="https://cats.tw93.fun?name=appfiles"><img src="https://raw.githubusercontent.com/tw93/sponsors/main/assets/sponsors.svg" width="1000" loading="lazy" /></a>
-
 ## License
 
 MIT License. Please feel free to use and contribute to the development.

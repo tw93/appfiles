@@ -124,15 +124,6 @@ npx github:tw93/appfiles appfiles.json
 
 我没指望它很快普及，所以先从自己的几个 App 开始带上。
 
-## 支持
-
-- 如果 appfiles 帮到了你，点个 Star、[分享一下](https://x.com/intent/tweet?url=https://github.com/tw93/appfiles&text=appfiles%20-%20An%20open%20spec%20for%20the%20files%20an%20app%20leaves%20on%20your%20machine.)，或者提 issue、PR 都很好
-- 我有两只猫，汤圆和可乐，如果 appfiles 对你有帮助，可以给它们喂<a href="https://cats.tw93.fun?name=appfiles" target="_blank">罐头 🥩</a>
-
-这些可爱的人已经喂过了 🐱
-
-<a href="https://cats.tw93.fun?name=appfiles"><img src="https://raw.githubusercontent.com/tw93/sponsors/main/assets/sponsors.svg" width="1000" loading="lazy" /></a>
-
 ## License
 
 MIT License，欢迎使用和参与开发。
